@@ -7,6 +7,8 @@ public class ClimbControler : MonoBehaviour {
     [SerializeField] GameObject person;
     [SerializeField] float radiusColliderRatio = 2f;
     [Range(0f, 1f)] [SerializeField] float allowedFlatness = 0.65f;
+    [SerializeField] float frontOffset = 0.3f;
+
     Vector3 climbPos;
     bool canClimb = false;
 
@@ -28,7 +30,7 @@ public class ClimbControler : MonoBehaviour {
             GetComponent<BoxCollider>().bounds.center.x,
             GetComponent<BoxCollider>().bounds.max.y,
             GetComponent<BoxCollider>().bounds.center.z
-        );
+        ) + person.transform.forward * frontOffset;
 
         RaycastHit hit;
 
