@@ -2,22 +2,26 @@
 using System.Collections;
 
 [RequireComponent (typeof (BoxCollider))]
-public class ClimbControler : MonoBehaviour {
+public class ClimbController : MonoBehaviour {
 
     [SerializeField] GameObject person;
     [SerializeField] float radiusColliderRatio = 2f;
     [Range(0f, 1f)] [SerializeField] float allowedFlatness = 0.65f;
     [SerializeField] float frontOffset = 0.3f;
 
-    Vector3 climbPos;
-    bool canClimb = false;
+
+    private bool canClimb = false;
+
+    public Vector3 climbPos;
+    public delegate void ClimbEventType(bool canClimb);
+    public event ClimbEventType climbEvent;
 
     void OnTriggerStay(Collider other)
     {
         canClimb = CheckIfCanClimb(out climbPos);
-        if (canClimb) 
-            person.transform.position = climbPos;
-
+        /*if (canClimb) 
+            person.transform.position = climbPos;*/
+        climbEvent.Invoke(canClimb);
 
     }
 
@@ -57,6 +61,7 @@ public class ClimbControler : MonoBehaviour {
     void OnTriggerExit(Collider other)
     {
         canClimb = false;
+        climbEvent.Invoke(false);
     }
 /*
     void OnDrawGizmos()
