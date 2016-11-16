@@ -18,7 +18,7 @@ public class ClimbCharacter : MonoBehaviour
 	[SerializeField] float m_GroundCheckDistance = 0.1f;
     [SerializeField] float climbDuration = 1.13f;
 
-    public enum Action { move, jump, climb, crouch, throwFrisbee };
+    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee };
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
@@ -33,6 +33,7 @@ public class ClimbCharacter : MonoBehaviour
 	CapsuleCollider m_Capsule;
 	bool m_Crouching;
     bool isClimbing = false;
+    bool isChargingFrisbee = false;
     float climbingProgression = 0;
     Vector3 climbInitPosition;
     [HideInInspector] public Vector3 climbFinalPosition;
@@ -63,6 +64,7 @@ public class ClimbCharacter : MonoBehaviour
 
         move = transform.InverseTransformDirection(move);
         CheckGroundStatus();
+        CheckThrowStatus(action);
         move = Vector3.ProjectOnPlane(move, m_GroundNormal);
         m_TurnAmount = Mathf.Atan2(move.x, move.z);
         m_ForwardAmount = move.z;
@@ -90,6 +92,14 @@ public class ClimbCharacter : MonoBehaviour
 		// send input and other state parameters to the animator
 		UpdateAnimator(move, action);
 
+    }
+
+    private void CheckThrowStatus(Action action)
+    {
+        if (action == Action.chargeFrisbee)
+            isChargingFrisbee = true;
+        else if(action == Action.throwFrisbee)
+            isChargingFrisbee = false;
     }
 
     IEnumerator climbingRoutine()
@@ -161,7 +171,7 @@ public class ClimbCharacter : MonoBehaviour
 		m_Animator.SetBool("Crouch", m_Crouching);
 		m_Animator.SetBool("OnGround", m_IsGrounded);
         m_Animator.SetBool("Climb", isClimbing);
-        m_Animator.SetBool("Throw", action == Action.throwFrisbee);
+        m_Animator.SetBool("Throw", isChargingFrisbee);
 
 
 

@@ -6,7 +6,7 @@ public class FrisbeeThrower : MonoBehaviour {
 
     [SerializeField] private GameObject frisbeePrefab;
     [SerializeField] private Transform hand;
-    [SerializeField] private float force = 15f;
+    [SerializeField] public float force = 15f;
 
     private GameObject frisbee;
     [HideInInspector]public Vector3 throwDirection;
@@ -37,8 +37,7 @@ public class FrisbeeThrower : MonoBehaviour {
 
     public void throwFrisbee()
     {
-        if (frisbee.transform.parent == null)
-            returnFrisbee();
+        
 
         frisbee.transform.rotation = frisbeePrefab.transform.rotation;
 
@@ -52,5 +51,12 @@ public class FrisbeeThrower : MonoBehaviour {
 
         frisbee.GetComponent<Animation>().Play();
   
+    }
+
+    public void charge()
+    {
+        if (frisbee.transform.parent == null)
+            returnFrisbee();
+
     }
 }
