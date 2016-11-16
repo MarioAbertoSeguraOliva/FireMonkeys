@@ -51,7 +51,6 @@ public class FrisbeeThrower : MonoBehaviour {
         frisbee.GetComponent<Collider>().enabled = true;
 
         frisbee.GetComponent<Animation>().Play();
-
-        
+  
     }
 }

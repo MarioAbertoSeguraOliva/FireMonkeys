@@ -160,7 +160,7 @@ public class ClimbCharacter : MonoBehaviour
 		m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
 		m_Animator.SetBool("Crouch", m_Crouching);
 		m_Animator.SetBool("OnGround", m_IsGrounded);
-        m_Animator.SetBool("Climb", action == Action.climb);
+        m_Animator.SetBool("Climb", isClimbing);
         m_Animator.SetBool("Throw", action == Action.throwFrisbee);
 
 

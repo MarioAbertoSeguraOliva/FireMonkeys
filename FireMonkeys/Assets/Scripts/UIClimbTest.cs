@@ -9,6 +9,7 @@ public class UIClimbTest : MonoBehaviour {
 
     void Start()
     {
+
         if (character == null)
             character = GameObject.Find("ClimbCharacter");
 

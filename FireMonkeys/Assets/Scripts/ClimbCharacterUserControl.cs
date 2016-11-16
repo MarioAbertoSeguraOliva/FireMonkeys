@@ -14,7 +14,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
     private Vector3 m_CamForward;             // The current forward direction of the camera
     private bool m_Jump;                      
     private bool m_Climb;
-    public float frisbeeDelay = 0.2f;
+    public float frisbeeDelay = 0.3f;
     private FrisbeeThrower frisbeeThrower;
 
     private void Start()
