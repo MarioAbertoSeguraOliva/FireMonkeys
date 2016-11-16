@@ -18,10 +18,12 @@ public class ClimbController : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        canClimb = CheckIfCanClimb(out climbPos);
-        /*if (canClimb) 
-            person.transform.position = climbPos;*/
-        climbEvent.Invoke(canClimb);
+        bool nowCanClimb = CheckIfCanClimb(out climbPos);
+        if (nowCanClimb != canClimb)
+        {
+            canClimb = nowCanClimb;
+            climbEvent.Invoke(canClimb);
+        }
 
     }
 

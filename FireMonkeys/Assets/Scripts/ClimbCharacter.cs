@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -17,7 +18,7 @@ public class ClimbCharacter : MonoBehaviour
 	[SerializeField] float m_GroundCheckDistance = 0.1f;
     [SerializeField] float climbDuration = 1.13f;
 
-    public enum Action { move, jump, climb };
+    public enum Action { move, jump, climb, crouch, throwFrisbee };
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
@@ -50,7 +51,7 @@ public class ClimbCharacter : MonoBehaviour
 	}
 
 
-    public void Move(Vector3 move, bool crouch, Action action)
+    public void Move(Vector3 move, Action action)
     {
 
         // convert the world relative moveInput vector into a local-relative
@@ -58,11 +59,7 @@ public class ClimbCharacter : MonoBehaviour
         // direction.
         if (move.magnitude > 1f) move.Normalize();
         if (action == Action.climb && !isClimbing)
-        {
-            climbingProgression = 0;
-            climbInitPosition = transform.position;
-            isClimbing = true;
-        }
+            startClimbing();
 
         move = transform.InverseTransformDirection(move);
         CheckGroundStatus();
@@ -72,15 +69,13 @@ public class ClimbCharacter : MonoBehaviour
 
         ApplyExtraTurnRotation();
 
-        if (isClimbing)
-            HandleClimbing();
-        else
-        {
+        
+        if(!isClimbing) { 
 
             // control and velocity handling is different when grounded and airborne:
             if (m_IsGrounded)
             {
-                HandleGroundedMovement(crouch, action);
+                HandleGroundedMovement(action);
             }
             else
             {
@@ -89,30 +84,38 @@ public class ClimbCharacter : MonoBehaviour
 
         }
 
-		ScaleCapsuleForCrouching(crouch);
+		ScaleCapsuleForCrouching(action);
 		PreventStandingInLowHeadroom();
 
 		// send input and other state parameters to the animator
 		UpdateAnimator(move, action);
-	}
 
-    private void HandleClimbing()
-    {
-        float actualProgression = climbingProgression + Time.deltaTime/climbDuration;
-        if (actualProgression < 1) {
-            //transform.position = Vector3.Lerp(climbInitPosition, climbFinalPosition, climbingProgression);
-            climbingProgression = actualProgression;
-        }else
-        {
-            transform.position = climbFinalPosition;
-            isClimbing = false;
-        }
-        m_Rigidbody.isKinematic = isClimbing;
     }
 
-    void ScaleCapsuleForCrouching(bool crouch)
+    IEnumerator climbingRoutine()
+    {
+        yield return new WaitForSeconds(climbDuration);
+        transform.position = climbFinalPosition;
+        isClimbing = false;
+        m_Rigidbody.isKinematic = false;
+    }
+
+    private void startClimbing()
+    {
+        Vector3 pos = transform.position;
+        pos.y = climbFinalPosition.y - 0.55f;
+        transform.position = pos;
+        isClimbing = true;
+        m_Rigidbody.isKinematic = true;
+
+        StartCoroutine(climbingRoutine());
+    }
+
+
+
+    void ScaleCapsuleForCrouching(Action action)
 	{
-		if (m_IsGrounded && crouch)
+		if (m_IsGrounded && action == Action.crouch)
 		{
 			if (m_Crouching) return;
 			m_Capsule.height = m_Capsule.height / 2f;
@@ -123,7 +126,7 @@ public class ClimbCharacter : MonoBehaviour
 		{
 			Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
 			float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
-			if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+			if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers & ~LayerMask.GetMask("Frisbee"), QueryTriggerInteraction.Ignore))
 			{
 				m_Crouching = true;
 				return;
@@ -141,7 +144,7 @@ public class ClimbCharacter : MonoBehaviour
 		{
 			Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
 			float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
-			if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+			if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers & ~LayerMask.GetMask("Frisbee"), QueryTriggerInteraction.Ignore))
 			{
 				m_Crouching = true;
 			}
@@ -158,13 +161,13 @@ public class ClimbCharacter : MonoBehaviour
 		m_Animator.SetBool("Crouch", m_Crouching);
 		m_Animator.SetBool("OnGround", m_IsGrounded);
         m_Animator.SetBool("Climb", action == Action.climb);
+        m_Animator.SetBool("Throw", action == Action.throwFrisbee);
 
-        
+
 
         if (!m_IsGrounded)
-		{
 			m_Animator.SetFloat("Jump", m_Rigidbody.velocity.y);
-		}
+		
 
 		// calculate which leg is behind, so as to leave that leg trailing in the jump animation
 		// (This code is reliant on the specific run cycle offset in our animations,
@@ -174,21 +177,16 @@ public class ClimbCharacter : MonoBehaviour
 				m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + m_RunCycleLegOffset, 1);
 		float jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
 		if (m_IsGrounded)
-		{
 			m_Animator.SetFloat("JumpLeg", jumpLeg);
-		}
+
 
 		// the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
 		// which affects the movement speed because of the root motion.
 		if (m_IsGrounded && move.magnitude > 0)
-		{
 			m_Animator.speed = m_AnimSpeedMultiplier;
-		}
 		else
-		{
 			// don't use that while airborne
 			m_Animator.speed = 1;
-		}
 	}
 
 
@@ -202,17 +200,18 @@ public class ClimbCharacter : MonoBehaviour
 	}
 
 
-	void HandleGroundedMovement(bool crouch, Action action)
+	void HandleGroundedMovement(Action action)
 	{
 		// check whether conditions are right to allow a jump:
-		if (action == Action.jump && !crouch && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
+		if (action == Action.jump && action != Action.crouch && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
 		{
 			// jump!
 			m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
 			m_IsGrounded = false;
 			m_Animator.applyRootMotion = false;
 			m_GroundCheckDistance = 0.1f;
-		}
+            
+        }
 	}
 
 	void ApplyExtraTurnRotation()

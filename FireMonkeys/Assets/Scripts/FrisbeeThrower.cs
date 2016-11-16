@@ -4,11 +4,12 @@ using System;
 
 public class FrisbeeThrower : MonoBehaviour {
 
-    [SerializeField] GameObject frisbeePrefab;
-    [SerializeField] Transform hand;
-    [SerializeField] float force = 15f;
+    [SerializeField] private GameObject frisbeePrefab;
+    [SerializeField] private Transform hand;
+    [SerializeField] private float force = 15f;
 
-    GameObject frisbee;
+    private GameObject frisbee;
+    [HideInInspector]public Vector3 throwDirection;
 
     // Use this for initialization
     void Start () {
@@ -18,16 +19,6 @@ public class FrisbeeThrower : MonoBehaviour {
         
     }
 	
-	// Update is called once per frame
-	void Update () {
-	    if(Input.GetMouseButtonDown(0))
-        {
-            if (frisbee.transform.parent != null)
-                throwFrisbee();
-            else
-                returnFrisbee();
-        }
-    }
 
     private void returnFrisbee()
     {
@@ -44,19 +35,23 @@ public class FrisbeeThrower : MonoBehaviour {
         frisbee.transform.rotation = hand.rotation * frisbeePrefab.transform.rotation;
     }
 
-    private void throwFrisbee()
+    public void throwFrisbee()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Rigidbody frisbeeRb = frisbee.GetComponent<Rigidbody>();
+        if (frisbee.transform.parent == null)
+            returnFrisbee();
 
         frisbee.transform.rotation = frisbeePrefab.transform.rotation;
 
+        Rigidbody frisbeeRb = frisbee.GetComponent<Rigidbody>();
+
         frisbeeRb.isKinematic = false;
-        frisbeeRb.velocity = ray.direction * force;
+        frisbeeRb.velocity = throwDirection * force;
         frisbee.transform.parent = null;
 
         frisbee.GetComponent<Collider>().enabled = true;
 
         frisbee.GetComponent<Animation>().Play();
+
+        
     }
 }

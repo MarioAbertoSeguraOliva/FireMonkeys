@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -11,10 +12,10 @@ public class ClimbCharacterUserControl : MonoBehaviour
     private ClimbController climbController;   // A reference to the ClimbController on the object
     private Transform m_Cam;                  // A reference to the main camera in the scenes transform
     private Vector3 m_CamForward;             // The current forward direction of the camera
-    private Vector3 m_Move;
-    private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
-    private bool m_Climb;                      // the world-relative desired move direction, calculated from the camForward and user input.
-
+    private bool m_Jump;                      
+    private bool m_Climb;
+    public float frisbeeDelay = 0.2f;
+    private FrisbeeThrower frisbeeThrower;
 
     private void Start()
     {
@@ -34,7 +35,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
         m_Character = GetComponent<ClimbCharacter>();
         climbController = GetComponentInChildren<ClimbController>();
         climbController.climbEvent += ClimbEvent;
-
+        frisbeeThrower = GetComponentInChildren<FrisbeeThrower>();
     }
 
     private void ClimbEvent(bool canClimb)
@@ -45,53 +46,78 @@ public class ClimbCharacterUserControl : MonoBehaviour
     private void Update()
     {
         if (!m_Jump)
-        {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-        }
-
-
     }
 
 
     // Fixed update is called in sync with physics
     private void FixedUpdate()
     {
+
+        Vector3 m_Move = calculateMove();
+
+        ClimbCharacter.Action action = getAction();
+
+        if(action == ClimbCharacter.Action.throwFrisbee)
+            StartCoroutine(ThrowFrisbee());
+
+        // pass all parameters to the character control script
+        m_Character.Move(m_Move, action);
+        m_Jump = false;
+    }
+
+    private IEnumerator ThrowFrisbee()
+    {
+        yield return new WaitForSeconds(frisbeeDelay);
+        frisbeeThrower.throwFrisbee ();
+    }
+
+    private ClimbCharacter.Action getAction()
+    {
+        bool crouch = Input.GetKey(KeyCode.C);
+        bool climb = Input.GetKeyDown(KeyCode.E) && m_Climb;
+        bool throwFrisbee = Input.GetMouseButtonDown(0);
+
+        if (climb)
+        {
+            m_Character.climbFinalPosition = climbController.climbPos;
+            return ClimbCharacter.Action.climb;
+        }
+        else if (m_Jump)
+            return ClimbCharacter.Action.jump;
+        else if (throwFrisbee)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            frisbeeThrower.throwDirection = ray.direction;
+            return ClimbCharacter.Action.throwFrisbee;
+        }
+        else if (crouch)
+            return ClimbCharacter.Action.crouch;
+        else
+            return ClimbCharacter.Action.move;
+
+    }
+
+    private Vector3 calculateMove()
+    {
         // read inputs
         float h = CrossPlatformInputManager.GetAxis("Horizontal");
         float v = CrossPlatformInputManager.GetAxis("Vertical");
-        bool crouch = Input.GetKey(KeyCode.C);
-        bool climb = Input.GetKeyDown(KeyCode.Q) && m_Climb;
+        Vector3 move;
 
         // calculate move direction to pass to character
         if (m_Cam != null)
         {
             // calculate camera relative direction to move:
             m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
-            m_Move = v*m_CamForward + h*m_Cam.right;
+            move = v * m_CamForward + h * m_Cam.right;
         }
         else
         {
             // we use world-relative directions in the case of no main camera
-            m_Move = v*Vector3.forward + h*Vector3.right;
+            move = v * Vector3.forward + h * Vector3.right;
         }
-#if !MOBILE_INPUT
-		// walk speed multiplier
-	    if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
-#endif
 
-        ClimbCharacter.Action action;
-        if (climb)
-        {
-            action = ClimbCharacter.Action.climb;
-            m_Character.climbFinalPosition = climbController.climbPos;
-        }
-        else if (m_Jump)
-            action = ClimbCharacter.Action.jump;
-        else
-            action = ClimbCharacter.Action.move;
-
-        // pass all parameters to the character control script
-        m_Character.Move(m_Move, crouch, action);
-        m_Jump = false;
+        return move;
     }
 }
