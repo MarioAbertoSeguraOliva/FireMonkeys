@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityStandardAssets.Vehicles.Car;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -29,6 +30,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 
+        bool insideEvent = false;
+        Collider collider;
+        bool toDestroy = false;
 
 		void Start()
 		{
@@ -73,6 +77,21 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);
+
+            //TODO -  refactor this
+            if (insideEvent)
+            {
+                if (collider.tag == "Vehicle" && Input.GetKeyDown(KeyCode.T))
+                {
+                    GameObject vehicle = GameObject.FindGameObjectWithTag("Vehicle");
+                    vehicle.GetComponentInChildren<Camera>().enabled = true;
+                    vehicle.GetComponent<CarController>().enabled = true;
+                    vehicle.GetComponent<CarUserControl>().enabled = true;
+                    vehicle.GetComponent<CarAudio>().enabled = true;
+                    toDestroy = true;
+                    insideEvent = false;
+                }
+            }
 		}
 
 
@@ -221,5 +240,17 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Animator.applyRootMotion = false;
 			}
 		}
-	}
+
+        //transform into coroutine with events
+        public void OnTriggerEnter(Collider other)
+        {
+            insideEvent = true;
+            collider = other;
+        }
+
+        public bool isDestroyable()
+        {
+            return toDestroy;
+        }
+    }
 }

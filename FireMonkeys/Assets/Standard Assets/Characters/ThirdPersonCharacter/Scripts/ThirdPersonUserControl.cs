@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
@@ -38,6 +39,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+            }
+
+            if (m_Character.isDestroyable()) {
+                Destroy(GameObject.FindGameObjectWithTag("Player"));
             }
         }
 
