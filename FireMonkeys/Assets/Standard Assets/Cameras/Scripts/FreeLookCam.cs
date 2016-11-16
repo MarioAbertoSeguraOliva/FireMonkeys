@@ -49,6 +49,14 @@ namespace UnityStandardAssets.Cameras
                 Cursor.lockState = m_LockCursor ? CursorLockMode.Locked : CursorLockMode.None;
                 Cursor.visible = !m_LockCursor;
             }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                var cam = m_Cam.gameObject.GetComponent<Camera>();
+                var fov = cam.fieldOfView;
+                fov -= 10f; // 10f - intensivity
+                cam.fieldOfView = Mathf.Clamp(fov, 25f, 100f); // 25f, 100f - min, max borders
+            }
         }
 
 

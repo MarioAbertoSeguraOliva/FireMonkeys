@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/DeveloperRoomM.unity
+- path: Assets/Scenes/CameraScene.unity
   isLoaded: 1
   isActive: 1
