@@ -22,6 +22,7 @@ public class ClimbCharacter : MonoBehaviour
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
+    float moveInAirFactor = 0.1f;
 	bool m_IsGrounded;
 	float m_OrigGroundCheckDistance;
 	const float k_Half = 0.5f;
@@ -34,7 +35,6 @@ public class ClimbCharacter : MonoBehaviour
 	bool m_Crouching;
     bool isClimbing = false;
     bool isChargingFrisbee = false;
-    float climbingProgression = 0;
     Vector3 climbInitPosition;
     [HideInInspector] public Vector3 climbFinalPosition;
 
@@ -81,7 +81,7 @@ public class ClimbCharacter : MonoBehaviour
             }
             else
             {
-                HandleAirborneMovement();
+                HandleAirborneMovement(move);
             }
 
         }
@@ -200,12 +200,15 @@ public class ClimbCharacter : MonoBehaviour
 	}
 
 
-	void HandleAirborneMovement()
+	void HandleAirborneMovement(Vector3 move)
 	{
-		// apply extra gravity from multiplier:
-		Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
-		m_Rigidbody.AddForce(extraGravityForce);
+        // apply extra gravity from multiplier:
+        
 
+        transform.localPosition += transform.rotation * (moveInAirFactor * move);
+        Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
+		m_Rigidbody.AddForce(extraGravityForce);
+        
 		m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
 	}
 

@@ -9,7 +9,6 @@ public class ClimbController : MonoBehaviour {
     [Range(0f, 1f)] [SerializeField] float allowedFlatness = 0.65f;
     [SerializeField] float frontOffset = 0.3f;
 
-
     private bool canClimb = false;
 
     public Vector3 climbPos;
