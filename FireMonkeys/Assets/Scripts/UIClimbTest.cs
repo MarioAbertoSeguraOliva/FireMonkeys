@@ -19,7 +19,7 @@ public class UIClimbTest : MonoBehaviour {
 
     void onClimb(bool isClimbing)
     {
-        text.text = (isClimbing) ? "Escalar -> E" : "";
+        text.text = (isClimbing) ? "Escalar -> E  Soltarse -> Espacio" : "";
     }
 
 }

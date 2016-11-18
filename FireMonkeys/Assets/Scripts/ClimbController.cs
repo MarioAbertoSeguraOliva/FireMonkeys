@@ -8,6 +8,7 @@ public class ClimbController : MonoBehaviour {
     [SerializeField] float radiusColliderRatio = 2f;
     [Range(0f, 1f)] [SerializeField] float allowedFlatness = 0.65f;
     [SerializeField] float frontOffset = 0.3f;
+    [SerializeField] float upOffsetWhenClimb = 0.2f; //Remove errors
 
     private bool canClimb = false;
 
@@ -49,6 +50,7 @@ public class ClimbController : MonoBehaviour {
             return false;
 
         climbPos = hit.point;
+        climbPos.y += upOffsetWhenClimb;
 
         return !Physics.CapsuleCast(
                 hit.point,
@@ -64,19 +66,5 @@ public class ClimbController : MonoBehaviour {
         canClimb = false;
         climbEvent.Invoke(false);
     }
-/*
-    void OnDrawGizmos()
-    {
-
-        Gizmos.color = Color.yellow;
-        if (canClimb)
-        {
-            CapsuleCollider personCollider = person.GetComponent<CapsuleCollider>();
-            Gizmos.DrawLine(climbPos, climbPos + new Vector3(0, personCollider.height, 0));
-            Gizmos.DrawSphere(climbPos, personCollider.radius * radiusColliderRatio);
-            Gizmos.DrawSphere(climbPos + new Vector3(0, personCollider.height, 0), personCollider.radius * radiusColliderRatio);
-            
-    }
-    }*/
 
 }

@@ -87,7 +87,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
             return ClimbCharacter.Action.climb;
         }
         else if (m_Jump)
-            return ClimbCharacter.Action.jump;
+             return (m_Climb)? ClimbCharacter.Action.comeOff : ClimbCharacter.Action.jump;
         else if (chargeFrisbee)
         {
             isChargingFrisbee = true;

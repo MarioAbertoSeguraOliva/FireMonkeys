@@ -111,7 +111,7 @@ public class FrisbeeThrower : MonoBehaviour {
     public void Update()
     {
         if(isCharging)
-            frisbee.transform.position = hand.position;
+            frisbee.transform.position = hand.position + hand.rotation * Vector3.forward *0.2f;
 
     }
 
