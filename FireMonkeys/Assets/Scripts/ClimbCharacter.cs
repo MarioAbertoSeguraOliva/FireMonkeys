@@ -18,10 +18,11 @@ public class ClimbCharacter : MonoBehaviour
 	[SerializeField] float m_GroundCheckDistance = 0.1f;
     [SerializeField] float climbDuration = 1.13f;
 
-    public enum Action { move, jump, climb, crouch, throwFrisbee };
+    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, comeOff };
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
+    float moveInAirFactor = 0.1f;
 	bool m_IsGrounded;
 	float m_OrigGroundCheckDistance;
 	const float k_Half = 0.5f;
@@ -33,10 +34,12 @@ public class ClimbCharacter : MonoBehaviour
 	CapsuleCollider m_Capsule;
 	bool m_Crouching;
     bool isClimbing = false;
-    float climbingProgression = 0;
+    bool grabTheLedge = false;
+    bool isChargingFrisbee = false;
     Vector3 climbInitPosition;
     [HideInInspector] public Vector3 climbFinalPosition;
-
+    private ClimbController climbController;
+    private float m_distanceToFloor;
 
     void Start()
 	{
@@ -48,8 +51,26 @@ public class ClimbCharacter : MonoBehaviour
 
 		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 		m_OrigGroundCheckDistance = m_GroundCheckDistance;
+
+        climbController = GetComponentInChildren<ClimbController>();
+        climbController.climbEvent += OnClimb;
 	}
 
+    void OnClimb(bool canClimb)
+    {
+        grabTheLedge = canClimb;
+        if(grabTheLedge && !m_IsGrounded)
+        {
+            m_Rigidbody.isKinematic = true;
+            Vector3 pos = transform.position;
+            climbFinalPosition = climbController.climbPos;
+            pos.y = climbFinalPosition.y - 1.6f;
+            transform.position = pos;
+        }else
+        {
+            m_Rigidbody.isKinematic = false;
+        }
+    }
 
     public void Move(Vector3 move, Action action)
     {
@@ -61,16 +82,22 @@ public class ClimbCharacter : MonoBehaviour
         if (action == Action.climb && !isClimbing)
             startClimbing();
 
+        if(action == Action.comeOff && !isClimbing) 
+        {
+            grabTheLedge = false;
+            m_Rigidbody.isKinematic = false;
+        }
+
         move = transform.InverseTransformDirection(move);
         CheckGroundStatus();
+        CheckThrowStatus(action);
         move = Vector3.ProjectOnPlane(move, m_GroundNormal);
         m_TurnAmount = Mathf.Atan2(move.x, move.z);
         m_ForwardAmount = move.z;
-
-        ApplyExtraTurnRotation();
-
         
-        if(!isClimbing) { 
+        if(!isClimbing && !grabTheLedge) {
+
+            ApplyExtraTurnRotation();
 
             // control and velocity handling is different when grounded and airborne:
             if (m_IsGrounded)
@@ -79,7 +106,7 @@ public class ClimbCharacter : MonoBehaviour
             }
             else
             {
-                HandleAirborneMovement();
+                HandleAirborneMovement(move);
             }
 
         }
@@ -90,6 +117,14 @@ public class ClimbCharacter : MonoBehaviour
 		// send input and other state parameters to the animator
 		UpdateAnimator(move, action);
 
+    }
+
+    private void CheckThrowStatus(Action action)
+    {
+        if (action == Action.chargeFrisbee)
+            isChargingFrisbee = true;
+        else if(action == Action.throwFrisbee)
+            isChargingFrisbee = false;
     }
 
     IEnumerator climbingRoutine()
@@ -160,8 +195,9 @@ public class ClimbCharacter : MonoBehaviour
 		m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
 		m_Animator.SetBool("Crouch", m_Crouching);
 		m_Animator.SetBool("OnGround", m_IsGrounded);
-        m_Animator.SetBool("Climb", action == Action.climb);
-        m_Animator.SetBool("Throw", action == Action.throwFrisbee);
+        m_Animator.SetBool("Climb", isClimbing);
+        m_Animator.SetBool("GrabTheLedge", grabTheLedge);
+        m_Animator.SetBool("Throw", isChargingFrisbee);
 
 
 
@@ -190,12 +226,15 @@ public class ClimbCharacter : MonoBehaviour
 	}
 
 
-	void HandleAirborneMovement()
+	void HandleAirborneMovement(Vector3 move)
 	{
-		// apply extra gravity from multiplier:
-		Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
-		m_Rigidbody.AddForce(extraGravityForce);
+        // apply extra gravity from multiplier:
+        
 
+        transform.localPosition += transform.rotation * (moveInAirFactor * move);
+        Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
+		m_Rigidbody.AddForce(extraGravityForce);
+        
 		m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
 	}
 
@@ -212,6 +251,7 @@ public class ClimbCharacter : MonoBehaviour
 			m_GroundCheckDistance = 0.1f;
             
         }
+
 	}
 
 	void ApplyExtraTurnRotation()
@@ -258,6 +298,13 @@ public class ClimbCharacter : MonoBehaviour
 			m_GroundNormal = Vector3.up;
 			m_Animator.applyRootMotion = false;
 		}
-	}
+
+
+        if (m_IsGrounded && grabTheLedge)
+        {
+            m_Rigidbody.isKinematic = false;
+            grabTheLedge = false;
+        }
+    }
 }
 

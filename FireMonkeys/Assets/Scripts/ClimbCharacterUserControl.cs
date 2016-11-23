@@ -14,7 +14,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
     private Vector3 m_CamForward;             // The current forward direction of the camera
     private bool m_Jump;                      
     private bool m_Climb;
-    public float frisbeeDelay = 0.2f;
+    private bool isChargingFrisbee = false;
     private FrisbeeThrower frisbeeThrower;
 
     private void Start()
@@ -58,25 +58,28 @@ public class ClimbCharacterUserControl : MonoBehaviour
 
         ClimbCharacter.Action action = getAction();
 
-        if(action == ClimbCharacter.Action.throwFrisbee)
-            StartCoroutine(ThrowFrisbee());
+        if (isChargingFrisbee && !Input.GetMouseButton(0))
+        {
+            isChargingFrisbee = false;
+            action = ClimbCharacter.Action.throwFrisbee;
+        }
+
+        frisbeeThrower.ManageFrisbee(action);
 
         // pass all parameters to the character control script
         m_Character.Move(m_Move, action);
         m_Jump = false;
     }
 
-    private IEnumerator ThrowFrisbee()
-    {
-        yield return new WaitForSeconds(frisbeeDelay);
-        frisbeeThrower.throwFrisbee ();
-    }
-
     private ClimbCharacter.Action getAction()
     {
         bool crouch = Input.GetKey(KeyCode.C);
         bool climb = Input.GetKeyDown(KeyCode.E) && m_Climb;
-        bool throwFrisbee = Input.GetMouseButtonDown(0);
+        bool chargeFrisbee = Input.GetMouseButtonDown(0);
+        bool throwFrisbee = Input.GetMouseButtonUp(0);
+
+        if (isChargingFrisbee && Input.GetMouseButtonUp(1))
+            frisbeeThrower.addNewObjective(Camera.main.ScreenPointToRay(Input.mousePosition));
 
         if (climb)
         {
@@ -84,7 +87,12 @@ public class ClimbCharacterUserControl : MonoBehaviour
             return ClimbCharacter.Action.climb;
         }
         else if (m_Jump)
-            return ClimbCharacter.Action.jump;
+             return (m_Climb)? ClimbCharacter.Action.comeOff : ClimbCharacter.Action.jump;
+        else if (chargeFrisbee)
+        {
+            isChargingFrisbee = true;
+            return ClimbCharacter.Action.chargeFrisbee;
+        }
         else if (throwFrisbee)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
