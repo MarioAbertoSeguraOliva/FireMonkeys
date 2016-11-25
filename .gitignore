@@ -31,3 +31,4 @@ sysinfo.txt
 *.unitypackage
 
 FireMonkeys/Temp/UnityLockfile
+FireMonkeys/Temp/Commandpipe
