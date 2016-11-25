@@ -131,6 +131,8 @@ public class ClimbCharacterUserControl : MonoBehaviour
             move = v * Vector3.forward + h * Vector3.right;
         }
 
+        if (Input.GetKey(KeyCode.LeftShift)) move *= 0.3f;
+
         return move;
     }
 }
