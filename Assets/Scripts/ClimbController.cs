@@ -16,6 +16,15 @@ public class ClimbController : MonoBehaviour {
     public delegate void ClimbEventType(bool canClimb);
     public event ClimbEventType climbEvent;
 
+    private static int ignoreRaycastMask;
+    private static int secondCheckMask;
+
+    void Awake()
+    {
+        ignoreRaycastMask = ~LayerMask.GetMask("Ignore Raycast");
+        secondCheckMask = ignoreRaycastMask & ~LayerMask.GetMask("Player");
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (other.isTrigger)
@@ -45,7 +54,7 @@ public class ClimbController : MonoBehaviour {
 
         bool haveASurfaceToClimb = Physics.Raycast(top, Vector3.down,
             out hit, GetComponent<BoxCollider>().bounds.size.y,
-            ~LayerMask.GetMask("Ignore Raycast"));
+            ignoreRaycastMask);
 
         bool surfaceIsNotFlat = hit.normal.y < allowedFlatness;
 
@@ -55,12 +64,23 @@ public class ClimbController : MonoBehaviour {
         climbPos = hit.point;
         climbPos.y += upOffsetWhenClimb;
 
+        Vector3 rayStart = transform.position;
+        rayStart.y = climbPos.y;
+        Vector3 ray = climbPos - rayStart;
+
+        if(Physics.Raycast(rayStart, ray,
+            out hit, ray.magnitude,
+            secondCheckMask))
+        {
+            return false;
+        }
+
         return !Physics.CapsuleCast(
                 hit.point,
                 hit.point + new Vector3(0, personCollider.height, 0),
                 personCollider.radius * radiusColliderRatio,
                 Vector3.up
-            );
+            ); ;
         }
 
 

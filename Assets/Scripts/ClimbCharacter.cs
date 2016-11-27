@@ -17,12 +17,12 @@ public class ClimbCharacter : MonoBehaviour
 	[SerializeField] float m_AnimSpeedMultiplier = 1f;
 	[SerializeField] float m_GroundCheckDistance = 0.1f;
     [SerializeField] float climbDuration = 1.13f;
+    [SerializeField] float moveInAirFactor = 0.05f;
 
     public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, comeOff };
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
-    float moveInAirFactor = 0.1f;
 	bool m_IsGrounded;
 	float m_OrigGroundCheckDistance;
 	const float k_Half = 0.5f;
@@ -68,6 +68,7 @@ public class ClimbCharacter : MonoBehaviour
             transform.position = pos;
         }else
         {
+            m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.isKinematic = false;
         }
     }

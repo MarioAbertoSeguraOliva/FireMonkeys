@@ -9,13 +9,13 @@ public class FrisbeeThrower : MonoBehaviour {
     [HideInInspector] public float force = 15f;
     [SerializeField] private float frisbeeDelay = 0.3f;
     [SerializeField] private Vector2 forceRange = new Vector2( 5f, 60f );
-    [SerializeField] private Vector2 gravityRange = new Vector2( 0.1f, 1f);
+    [SerializeField] private Vector2 gravityRange = new Vector2( 0.0001f, 1f);
     [SerializeField] private float maxChargeTime = 4f;
     [SerializeField] private float objectiveDepth = 20;
     private float chargingFrisbeeStartTime;
 
 
-    [SerializeField] public GameObject frisbee;
+    [HideInInspector] public GameObject frisbee;
     private bool isCharging;
     [HideInInspector]public Vector3 throwDirection;
     private float gravity;

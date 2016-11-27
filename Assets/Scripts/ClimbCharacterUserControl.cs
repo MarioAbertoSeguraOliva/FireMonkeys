@@ -81,9 +81,6 @@ public class ClimbCharacterUserControl : MonoBehaviour
         bool chargeFrisbee = Input.GetMouseButtonDown(0);
         bool throwFrisbee = Input.GetMouseButtonUp(0);
 
-        if (isChargingFrisbee && Input.GetMouseButtonUp(1))
-            frisbeeThrower.addNewObjective(Camera.main.ScreenPointToRay(Input.mousePosition));
-
         if (climb)
         {
             m_Character.climbFinalPosition = climbController.climbPos;
@@ -100,8 +97,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
         }
         else if (throwFrisbee)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            frisbeeThrower.throwDirection = ray.direction;
+            frisbeeThrower.throwDirection = getThrowDirection();
             return ClimbCharacter.Action.throwFrisbee;
         }
         else if (crouch)
@@ -109,6 +105,18 @@ public class ClimbCharacterUserControl : MonoBehaviour
         else
             return ClimbCharacter.Action.move;
 
+    }
+
+    private Vector3 getThrowDirection()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo))
+        {
+            return (hitInfo.point - transform.position).normalized;
+        }
+        else
+            return ray.direction;
     }
 
     private Vector3 calculateMove()
