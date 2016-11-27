@@ -16,6 +16,16 @@ public class ClimbController : MonoBehaviour {
     public delegate void ClimbEventType(bool canClimb);
     public event ClimbEventType climbEvent;
 
+    public float y_Modifier = 0.5f;
+    public float z_Modifier = 0.5f;
+    public float jumpForce = 100.0f;
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 direction = transform.TransformDirection(Vector3.forward) * 5;
+        Gizmos.DrawRay(transform.position, direction);
+    }
     void OnTriggerStay(Collider other)
     {
         bool nowCanClimb = CheckIfCanClimb(out climbPos);
@@ -23,7 +33,23 @@ public class ClimbController : MonoBehaviour {
         {
             canClimb = nowCanClimb;
             climbEvent.Invoke(canClimb);
+        }else
+        {
+            if (!nowCanClimb)
+            {
+                if (Input.GetKeyDown(KeyCode.Y))
+                {
+                    Vector3 newJump = new Vector3(GetComponentInParent<Rigidbody>().transform.position.x ,
+                                                  GetComponentInParent<Rigidbody>().transform.position.y * y_Modifier,
+                                                  GetComponentInParent<Rigidbody>().transform.position.z * -z_Modifier);
+
+                    GetComponentInParent<Rigidbody>().AddForce(Vector3.up * jumpForce);
+                    GetComponentInParent<Rigidbody>().AddForce(Vector3.left * jumpForce);
+                    GetComponentInParent<Rigidbody>().transform.Rotate(0, 180, 0);
+                }
+            }
         }
+        
 
     }
 
