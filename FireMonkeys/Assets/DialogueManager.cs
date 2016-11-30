@@ -11,24 +11,33 @@ public class DialogueManager : MonoBehaviour {
 
     void Awake()
     {
-	    if (Instance != null & Instance != this)
+        if (Instance != null & Instance != this)
         {
             Destroy(gameObject);
         }
-
         Instance = this;
-        TextAsset temp = (TextAsset) Resources.Load("Dialogues/" + dialogueAudio.name);
-        //TextAsset temp = Resources.Load("Dialogues/"+dialogueAudio.name) as TextAsset;
-        fileLines = temp.text.Split('\n');
-        displaySubtitle = fileLines[0];
-        Debug.Log(displaySubtitle);
     }
 
     public void BeginDialogue(AudioClip passedClip)
     {
+        playAudio(passedClip);
+        playSubtitle();
+    }
+
+    void playAudio(AudioClip passedClip)
+    {
         dialogueAudio = passedClip;
         GetComponent<AudioSource>().clip = passedClip;
         GetComponent<AudioSource>().Play();
+    }
+
+    //TextAsset.text shows all lines, for this example fileLines[0] will work
+    void playSubtitle()
+    {
+        TextAsset temp = (TextAsset)Resources.Load("Dialogues/" + dialogueAudio.name);
+        fileLines = temp.text.Split('\n');
+        displaySubtitle = fileLines[0];
+        OnGUI();
     }
 
     void OnGUI()
