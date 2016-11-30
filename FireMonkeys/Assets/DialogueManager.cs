@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
 
@@ -8,7 +9,7 @@ public class DialogueManager : MonoBehaviour {
     private GUIStyle subtitleStyle = new GUIStyle();
     string[] fileLines;
     string displaySubtitle;
-
+    float subtitleTime;
     void Awake()
     {
         if (Instance != null & Instance != this)
@@ -22,6 +23,7 @@ public class DialogueManager : MonoBehaviour {
     {
         playAudio(passedClip);
         playSubtitle();
+        subtitleTime = Time.time;
     }
 
     void playAudio(AudioClip passedClip)
@@ -37,9 +39,15 @@ public class DialogueManager : MonoBehaviour {
         TextAsset temp = (TextAsset)Resources.Load("Dialogues/" + dialogueAudio.name);
         fileLines = temp.text.Split('\n');
         displaySubtitle = fileLines[0];
-        OnGUI();
+        GetComponentInChildren<Text>().text = displaySubtitle;
     }
 
+    void Update()
+    {
+        if (Time.time - subtitleTime > 2.5f){
+            GetComponentInChildren<Text>().text = "";
+        }
+    }
     void OnGUI()
     {
         if (dialogueAudio != null && GetComponent<AudioSource>().name == dialogueAudio.name)
