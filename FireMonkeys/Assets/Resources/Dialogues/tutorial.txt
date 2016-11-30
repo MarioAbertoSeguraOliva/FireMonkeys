@@ -1,0 +1,24 @@
+Mr Narrator: Weelcomeee to Cordelia City!
+Mr Narrator: Today, you are going to learn the basics skills that will help you in your great adventure.
+Instruction: To move around use <aswd> keys.
+Mr Narrator: Try to move around you.
+Mr Narrator: Great.
+Mr Narrator: Sometimes, it would be usefull to jump walls to achieve any goal.
+Mr Narrator: Try to jump that wall.
+Instruction: Use <SpaceBar> to jump that wall! When grabbing the edge of a wall keep moving forward<w> or press <SpaceBar> to climb the wall.
+Mr Narrator: Excellent!
+Mr Narrator: Now you can try to go alone and try to find out how this world works.
+-----------------------------------------------------------------------------------------------
+Mr Narrator: Oh.. wait! What is that?!
+-----------------------------------------------------------------------------------------------
+Mr Narrator: It's that a frisbee? I'm not sure if that can be used as a weapon but try it out.
+Instruction: Use <LeftClick> to throw the frisbee in the desired direction as a ranged attack.
+Instruction: Use <RightClick> to thr......
+Instruction: If you hold <LeftClick>, you'll perform a charged ranged attack.
+Mr Narrator: Try to use the skills you have learned in the dummy near the ladder.
+Mr Narrator: First, use a basic ranged attack.
+Mr Narrator: Good job!
+Mr Narrator: Now, use *the second ability*
+Mr Narrator: Nice one!
+Mr Narrator: Finally you're going to use a fully charged attack to finish the dummy.
+Mr Narrator: You're prepared. Now you are free to choose the way that will determines your future. Good luck! 
