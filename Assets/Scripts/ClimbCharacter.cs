@@ -39,7 +39,6 @@ public class ClimbCharacter : MonoBehaviour
     Vector3 climbInitPosition;
     [HideInInspector] public Vector3 climbFinalPosition;
     private ClimbController climbController;
-    private float m_distanceToFloor;
 
     void Start()
 	{
@@ -134,6 +133,7 @@ public class ClimbCharacter : MonoBehaviour
         transform.position = climbFinalPosition;
         isClimbing = false;
         m_Rigidbody.isKinematic = false;
+        m_Rigidbody.velocity = Vector3.zero;
     }
 
     private void startClimbing()
@@ -236,7 +236,7 @@ public class ClimbCharacter : MonoBehaviour
         Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
 		m_Rigidbody.AddForce(extraGravityForce);
         
-		m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+		//m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
 	}
 
 
