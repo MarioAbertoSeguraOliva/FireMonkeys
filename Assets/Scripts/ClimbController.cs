@@ -22,7 +22,7 @@ public class ClimbController : MonoBehaviour {
     void Awake()
     {
         ignoreRaycastMask = ~LayerMask.GetMask("Ignore Raycast");
-        secondCheckMask = ignoreRaycastMask & ~LayerMask.GetMask("Player");
+        secondCheckMask = ignoreRaycastMask & ~LayerMask.GetMask("Player") & ~LayerMask.GetMask("Enemy");
     }
 
     void OnTriggerStay(Collider other)

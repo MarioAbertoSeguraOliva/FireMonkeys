@@ -106,7 +106,6 @@ namespace UnityStandardAssets.Cameras
             {
                 if (nearest > hitInfo.distance)
                 {
-                    Debug.Log(hitInfo.collider.name);
                     hitSomething = true;
                     nearest = hitInfo.distance;
                     targetDist = -m_Pivot.InverseTransformPoint(hitInfo.point).z;
