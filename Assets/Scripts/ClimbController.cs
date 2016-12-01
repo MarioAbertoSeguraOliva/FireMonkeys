@@ -18,16 +18,19 @@ public class ClimbController : MonoBehaviour {
 
     private static int ignoreRaycastMask;
     private static int secondCheckMask;
+    private static int enemyMask;
 
     void Awake()
     {
         ignoreRaycastMask = ~LayerMask.GetMask("Ignore Raycast");
-        secondCheckMask = ignoreRaycastMask & ~LayerMask.GetMask("Player") & ~LayerMask.GetMask("Enemy");
+        enemyMask = LayerMask.GetMask("Enemy");
+        secondCheckMask = ignoreRaycastMask & ~LayerMask.GetMask("Player") & ~enemyMask;
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (other.isTrigger)
+        LayerMask otherMask = 1 << other.gameObject.layer;
+        if (other.isTrigger || other.CompareTag("Player") || otherMask == enemyMask)
             return;
 
         bool nowCanClimb = CheckIfCanClimb(out climbPos);

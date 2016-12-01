@@ -17,6 +17,10 @@ public class Health : MonoBehaviour
         health = initHealth;
     }
 
+    void xs(float a)
+    {
+
+    }
     public float Amount {
         get
         {
@@ -25,7 +29,8 @@ public class Health : MonoBehaviour
         set
         {
             health = Mathf.Clamp(value, 0, maxHealth);
-            onChangeHealthEvent.Invoke(health);
+            if(onChangeHealthEvent != null)
+                onChangeHealthEvent.Invoke(health);
         }
     }
 

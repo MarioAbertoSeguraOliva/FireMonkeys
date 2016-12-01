@@ -17,7 +17,8 @@ public class AIEnemyControl : MonoBehaviour
         Wander = 0,
         Chase = 1,
         ClimbInChase = 2,
-        JumpInChase = 3
+        JumpInChase = 3,
+        die = 4
     }
     internal FSM fsm;
 
@@ -33,7 +34,7 @@ public class AIEnemyControl : MonoBehaviour
         agent.updateRotation = false;
 	    agent.updatePosition = true;
 
-        fsm = new FSM(this, new FSM.StateMethod[] { Wander, Chase, ClimbInChase, JumpInChase });
+        fsm = new FSM(this, new FSM.StateMethod[] { Wander, Chase, ClimbInChase, JumpInChase, Die });
 
         fsm.Start();
     }
@@ -109,6 +110,12 @@ public class AIEnemyControl : MonoBehaviour
         fsm.ChangeState(state.Chase);
     }
 
+    IEnumerator Die()
+    {
+        Destroy(gameObject);
+        yield return 0;
+    }
+
     public void SetTarget(Transform target)
     {
         this.target = target;
@@ -120,6 +127,15 @@ public class AIEnemyControl : MonoBehaviour
         {
             fsm.ChangeState(state.Chase);
             agent.enabled = true;
+        }
+
+        if(collision.collider.CompareTag("Frisbee"))
+        {
+            //TODO: Improve
+            GetComponent<Health>().Amount = 0;
+
+            fsm.ChangeState(state.die);
+
         }
     }
 
