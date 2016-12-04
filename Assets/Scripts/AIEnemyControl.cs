@@ -63,6 +63,9 @@ public class AIEnemyControl : MonoBehaviour
 
     private bool ShouldJump()
     {
+        if (agent.pathStatus != NavMeshPathStatus.PathComplete)
+            return true;
+
         Vector3 vector = target.position - transform.position;
         Vector3 difvector = agent.desiredVelocity.normalized + vector.normalized;
         return difvector.magnitude < 1 && vector.magnitude < 9;
