@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Exported from MakeHuman (www.makehuman.org) -->
+<!-- Skeleton: Game_engine -->
+<skeleton>
+    <bones>
+        <bone id="0" name="Root">
+            <position x="0.0" y="-9.53674316406e-07" z="-0.265799999237" />
+            <rotation angle="-2.09439510239">
+                <axis x="-0.57735026919" y="-0.57735026919" z="-0.57735026919" />
+            </rotation>
+        </bone>
+        <bone id="1" name="pelvis">
+            <position x="4.99283599854" y="0.314614653587" z="0.0" />
+            <rotation angle="2.31531561838">
+                <axis x="-0.635544550717" y="-0.438367710255" z="-0.635544549705" />
+            </rotation>
+        </bone>
+        <bone id="2" name="spine_01">
+            <position x="0.0" y="0.523028228025" z="1.78935805728e-07" />
+            <rotation angle="-0.458063891846">
+                <axis x="-1.0" y="-2.48834175036e-10" z="1.06739667899e-09" />
+            </rotation>
+        </bone>
+        <bone id="3" name="thigh_l">
+            <position x="0.634489715099" y="0.038208491909" z="-0.00733398180389" />
+            <rotation angle="2.9440359806">
+                <axis x="-0.97488936441" y="-0.0722769186163" z="0.210634218959" />
+            </rotation>
+        </bone>
+        <bone id="4" name="thigh_r">
+            <position x="-0.634489715099" y="0.038208491909" z="-0.00733398180389" />
+            <rotation angle="2.9440359806">
+                <axis x="-0.97488936441" y="0.0722769186163" z="-0.210634218959" />
+            </rotation>
+        </bone>
+        <bone id="5" name="spine_02">
+            <position x="1.17573938528e-16" y="0.467842794493" z="2.26899260491e-08" />
+            <rotation angle="0.19495178075">
+                <axis x="-1.0" y="2.75826619518e-11" z="5.3714600903e-09" />
+            </rotation>
+        </bone>
+        <bone id="6" name="calf_l">
+            <position x="-4.8805705033e-09" y="2.00932102355" z="7.93061349924e-09" />
+            <rotation angle="-0.532202831196">
+                <axis x="-0.424039278171" y="-0.896273924769" z="0.129937455524" />
+            </rotation>
+        </bone>
+        <bone id="7" name="calf_r">
+            <position x="4.8805705033e-09" y="2.00932102355" z="7.93061349924e-09" />
+            <rotation angle="0.532202831196">
+                <axis x="0.424039278171" y="-0.896273924769" z="0.129937455524" />
+            </rotation>
+        </bone>
+        <bone id="8" name="spine_03">
+            <position x="-1.24738370257e-16" y="0.421156072878" z="-2.42400159944e-08" />
+            <rotation angle="0.194741412184">
+                <axis x="-0.996095401844" y="-0.00854946965489" z="-0.0878684072514" />
+            </rotation>
+        </bone>
+        <bone id="9" name="foot_l">
+            <position x="2.65912625252e-09" y="2.67073482671" z="-1.28645785023e-08" />
+            <rotation angle="1.13631675523">
+                <axis x="-1.0" y="-3.80871116179e-07" z="-8.48426607353e-08" />
+            </rotation>
+        </bone>
+        <bone id="10" name="foot_r">
+            <position x="-2.65912625252e-09" y="2.67073482671" z="-1.28645785023e-08" />
+            <rotation angle="1.13631675523">
+                <axis x="-1.0" y="3.80871116179e-07" z="8.48426607353e-08" />
+            </rotation>
+        </bone>
+        <bone id="11" name="clavicle_l">
+            <position x="0.131926808255" y="1.37983400866" z="0.602969535404" />
+            <rotation angle="-1.84776760127">
+                <axis x="0.00856151229334" y="-0.0416695185165" z="0.999094766143" />
+            </rotation>
+        </bone>
+        <bone id="12" name="clavicle_r">
+            <position x="-0.147215497692" y="1.37504192626" z="0.60296953556" />
+            <rotation angle="1.88207625614">
+                <axis x="-0.00764504956522" y="-0.0413550153354" z="0.999115266585" />
+            </rotation>
+        </bone>
+        <bone id="13" name="neck_01">
+            <position x="-0.014326772254" y="1.76669408225" z="0.71216162543" />
+            <rotation angle="-0.785188322819">
+                <axis x="-0.999748344396" y="-0.00858079168494" z="-0.0207272258651" />
+            </rotation>
+        </bone>
+        <bone id="14" name="ball_l">
+            <position x="-3.85748322174e-10" y="0.763520663405" z="2.03774977448e-09" />
+            <rotation angle="0.682104458636">
+                <axis x="-0.997587255541" y="0.0686345619077" z="-0.0104386059355" />
+            </rotation>
+        </bone>
+        <bone id="15" name="ball_r">
+            <position x="3.85748322174e-10" y="0.763520663405" z="2.03774977448e-09" />
+            <rotation angle="0.682104458636">
+                <axis x="-0.997587255541" y="-0.0686345619077" z="0.0104386059355" />
+            </rotation>
+        </bone>
+        <bone id="16" name="upperarm_l">
+            <position x="1.7326135282e-07" y="0.904119707546" z="-4.61082598768e-08" />
+            <rotation angle="-0.557121407376">
+                <axis x="0.223185738047" y="-0.194046231106" z="0.955266552605" />
+            </rotation>
+        </bone>
+        <bone id="17" name="upperarm_r">
+            <position x="-1.65226502702e-07" y="0.904119642639" z="-4.40833070048e-08" />
+            <rotation angle="0.557045704784">
+                <axis x="-0.223209146127" y="-0.193389050071" z="0.955394343922" />
+            </rotation>
+        </bone>
+        <bone id="18" name="head">
+            <position x="3.46944695195e-17" y="0.563727744038" z="8.65716311971e-08" />
+            <rotation angle="0.472453700784">
+                <axis x="-1.0" y="4.16450876899e-09" z="-4.19006997797e-09" />
+            </rotation>
+        </bone>
+        <bone id="19" name="lowerarm_l">
+            <position x="-9.10263713294e-08" y="1.32359883705" z="1.27408995576e-08" />
+            <rotation angle="-0.788304551267">
+                <axis x="-0.998671897678" y="0.0131308939338" z="0.0498198796889" />
+            </rotation>
+        </bone>
+        <bone id="20" name="lowerarm_r">
+            <position x="9.10239563723e-08" y="1.32359883705" z="1.27580896958e-08" />
+            <rotation angle="-0.788300411069">
+                <axis x="-0.998676343284" y="-0.0127195668778" z="-0.0498374756972" />
+            </rotation>
+        </bone>
+        <bone id="21" name="hand_l">
+            <position x="-8.61112496864e-08" y="1.36608322438" z="5.49804992644e-08" />
+            <rotation angle="-0.971766716421">
+                <axis x="-0.220224236965" y="-0.97374499081" z="0.0576366057848" />
+            </rotation>
+        </bone>
+        <bone id="22" name="hand_r">
+            <position x="6.84667229578e-08" y="1.36608355389" z="6.70089836952e-08" />
+            <rotation angle="0.971618859394">
+                <axis x="0.220259770694" y="-0.973737474258" z="0.057627811337" />
+            </rotation>
+        </bone>
+        <bone id="23" name="index_01_l">
+            <position x="-0.10586948411" y="0.698073614431" z="0.0772967645764" />
+            <rotation angle="-1.03760277343">
+                <axis x="-0.214219298243" y="-0.976544792712" z="-0.0216877866014" />
+            </rotation>
+        </bone>
+        <bone id="24" name="middle_01_l">
+            <position x="0.00828393387427" y="0.668173254298" z="-0.07490894864" />
+            <rotation angle="-0.910755854945">
+                <axis x="-0.227754837444" y="-0.916510235217" z="0.328841485769" />
+            </rotation>
+        </bone>
+        <bone id="25" name="pinky_01_l">
+            <position x="0.226747507691" y="0.53187355245" z="-0.217392711841" />
+            <rotation angle="-0.804286838032">
+                <axis x="-0.0837574036446" y="-0.657762909184" z="0.748553707249" />
+            </rotation>
+        </bone>
+        <bone id="26" name="ring_01_l">
+            <position x="0.109828819439" y="0.612221075016" z="-0.165571905898" />
+            <rotation angle="-0.889556842196">
+                <axis x="-0.129140967547" y="-0.839383677878" z="0.527975048476" />
+            </rotation>
+        </bone>
+        <bone id="27" name="thumb_01_l">
+            <position x="-0.103832124015" y="0.265015525128" z="0.105200197723" />
+            <rotation angle="2.20765014321">
+                <axis x="0.280713476753" y="0.812476962872" z="0.510960985566" />
+            </rotation>
+        </bone>
+        <bone id="28" name="index_01_r">
+            <position x="0.105869679019" y="0.698073714532" z="0.0772966202734" />
+            <rotation angle="1.03760436134">
+                <axis x="0.214221660473" y="-0.976544250362" z="-0.0216888743048" />
+            </rotation>
+        </bone>
+        <bone id="29" name="middle_01_r">
+            <position x="-0.00828393265759" y="0.668173528248" z="-0.0749090765548" />
+            <rotation angle="0.910757409505">
+                <axis x="0.227758815157" y="-0.916509886025" z="0.328839704016" />
+            </rotation>
+        </bone>
+        <bone id="30" name="pinky_01_r">
+            <position x="-0.226747874792" y="0.531873626277" z="-0.217392538843" />
+            <rotation angle="0.804284727134">
+                <axis x="0.0837598213201" y="-0.657760389964" z="0.748555650388" />
+            </rotation>
+        </bone>
+        <bone id="31" name="ring_01_r">
+            <position x="-0.109829118128" y="0.612221071465" z="-0.165571715834" />
+            <rotation angle="0.889555266125">
+                <axis x="0.129142448292" y="-0.839382397013" z="0.527976722626" />
+            </rotation>
+        </bone>
+        <bone id="32" name="thumb_01_r">
+            <position x="0.103832341778" y="0.265015546087" z="0.105200281028" />
+            <rotation angle="-2.20765407726">
+                <axis x="-0.280712083585" y="0.812477151513" z="0.510961450991" />
+            </rotation>
+        </bone>
+        <bone id="33" name="index_02_l">
+            <position x="2.81052914275e-09" y="0.164924159546" z="3.01226865673e-09" />
+            <rotation angle="-0.206665650717">
+                <axis x="-0.998740785213" y="-0.039094332727" z="-0.0314400556706" />
+            </rotation>
+        </bone>
+        <bone id="34" name="middle_02_l">
+            <position x="-1.061655166e-07" y="0.221474621775" z="-1.22444068218e-07" />
+            <rotation angle="0.16021811371">
+                <axis x="0.88127393989" y="0.0269059446214" z="0.471839287274" />
+            </rotation>
+        </bone>
+        <bone id="35" name="pinky_02_l">
+            <position x="1.62826435446e-07" y="0.136016603256" z="1.66301659554e-07" />
+            <rotation angle="-0.208505327361">
+                <axis x="-0.986915645069" y="-0.000962190092442" z="-0.161234561146" />
+            </rotation>
+        </bone>
+        <bone id="36" name="ring_02_l">
+            <position x="8.89047169217e-08" y="0.193170027184" z="1.17075566131e-07" />
+            <rotation angle="0.155326087278">
+                <axis x="0.839841953761" y="0.0113503004202" z="0.542712321017" />
+            </rotation>
+        </bone>
+        <bone id="37" name="thumb_02_l">
+            <position x="1.83350352678e-08" y="0.209086134256" z="-2.28810628222e-07" />
+            <rotation angle="-0.382443250326">
+                <axis x="-0.396636165932" y="0.0991382200175" z="0.912606906179" />
+            </rotation>
+        </bone>
+        <bone id="38" name="index_02_r">
+            <position x="4.59109861239e-10" y="0.164924001575" z="6.92380375256e-10" />
+            <rotation angle="-0.206661862939">
+                <axis x="-0.998741298839" y="0.0390950828834" z="0.0314228020336" />
+            </rotation>
+        </bone>
+        <bone id="39" name="middle_02_r">
+            <position x="1.03983278876e-07" y="0.22147447854" z="-1.23363876448e-07" />
+            <rotation angle="0.160212190615">
+                <axis x="0.881272832346" y="-0.0269047799841" z="-0.471841422285" />
+            </rotation>
+        </bone>
+        <bone id="40" name="pinky_02_r">
+            <position x="-1.61653664676e-07" y="0.13601652866" z="1.6754951826e-07" />
+            <rotation angle="-0.20850361835">
+                <axis x="-0.986915067949" y="0.000961982754598" z="0.161238094895" />
+            </rotation>
+        </bone>
+        <bone id="41" name="ring_02_r">
+            <position x="-8.87147699746e-08" y="0.193170490771" z="1.14330290124e-07" />
+            <rotation angle="0.155325076058">
+                <axis x="0.839835825902" y="-0.0113501320391" z="-0.542721807222" />
+            </rotation>
+        </bone>
+        <bone id="42" name="thumb_02_r">
+            <position x="6.88253898318e-10" y="0.209086318576" z="8.02025112989e-12" />
+            <rotation angle="0.382443147907">
+                <axis x="0.396638140015" y="0.0991389671185" z="0.912605967044" />
+            </rotation>
+        </bone>
+        <bone id="43" name="index_03_l">
+            <position x="-7.37160332775e-10" y="0.148299712238" z="-8.9510265866e-10" />
+            <rotation angle="0.201812499423">
+                <axis x="0.943941283477" y="0.00231518089032" z="0.330105276063" />
+            </rotation>
+        </bone>
+        <bone id="44" name="middle_03_l">
+            <position x="1.1428991753e-07" y="0.175014660995" z="9.59867287875e-08" />
+            <rotation angle="-0.0935038219372">
+                <axis x="-0.987383592615" y="-6.81061145012e-05" z="0.158346570521" />
+            </rotation>
+        </bone>
+        <bone id="45" name="pinky_03_l">
+            <position x="1.02219654963e-09" y="0.0998996721994" z="2.7277646808e-10" />
+            <rotation angle="-0.0287261730157">
+                <axis x="0.166119873298" y="-0.000289193714315" z="0.986105523797" />
+            </rotation>
+        </bone>
+        <bone id="46" name="ring_03_l">
+            <position x="6.90620449717e-10" y="0.162241424673" z="-7.32003790915e-10" />
+            <rotation angle="0.126377713844">
+                <axis x="0.896943195899" y="-0.00065059368337" z="-0.442145315545" />
+            </rotation>
+        </bone>
+        <bone id="47" name="thumb_03_l">
+            <position x="2.31078267632e-09" y="0.234001712139" z="-1.8602142049e-09" />
+            <rotation angle="-0.351716638649">
+                <axis x="-0.979755392856" y="0.0343372790915" z="0.197231644099" />
+            </rotation>
+        </bone>
+        <bone id="48" name="index_03_r">
+            <position x="7.40573380398e-10" y="0.148299712238" z="-8.92285356713e-10" />
+            <rotation angle="0.201815321464">
+                <axis x="0.943937604944" y="-0.00231457189233" z="-0.33011579897" />
+            </rotation>
+        </bone>
+        <bone id="49" name="middle_03_r">
+            <position x="-1.17355854812e-07" y="0.17501417462" z="9.85588490821e-08" />
+            <rotation angle="-0.0935053522253">
+                <axis x="-0.987385051392" y="6.74978231131e-05" z="-0.158337474185" />
+            </rotation>
+        </bone>
+        <bone id="50" name="pinky_03_r">
+            <position x="-1.3015131195e-09" y="0.0998997178127" z="1.25549348695e-10" />
+            <rotation angle="0.0287267161258">
+                <axis x="-0.1660541422" y="-0.000287319301354" z="0.986116595188" />
+            </rotation>
+        </bone>
+        <bone id="51" name="ring_03_r">
+            <position x="-1.08060227433e-10" y="0.162240966691" z="5.58333823619e-10" />
+            <rotation angle="0.126378756168">
+                <axis x="0.896942453124" y="0.0006508151776" z="0.442146822021" />
+            </rotation>
+        </bone>
+        <bone id="52" name="thumb_03_r">
+            <position x="5.18459897236e-09" y="0.234001795168" z="-2.52463738803e-09" />
+            <rotation angle="-0.351716875676">
+                <axis x="-0.979755163596" y="-0.0343373599824" z="-0.197232768871" />
+            </rotation>
+        </bone>
+    </bones>
+    <bonehierarchy>
+        <boneparent bone="pelvis" parent="Root" />
+        <boneparent bone="spine_01" parent="pelvis" />
+        <boneparent bone="thigh_l" parent="pelvis" />
+        <boneparent bone="thigh_r" parent="pelvis" />
+        <boneparent bone="spine_02" parent="spine_01" />
+        <boneparent bone="calf_l" parent="thigh_l" />
+        <boneparent bone="calf_r" parent="thigh_r" />
+        <boneparent bone="spine_03" parent="spine_02" />
+        <boneparent bone="foot_l" parent="calf_l" />
+        <boneparent bone="foot_r" parent="calf_r" />
+        <boneparent bone="clavicle_l" parent="spine_03" />
+        <boneparent bone="clavicle_r" parent="spine_03" />
+        <boneparent bone="neck_01" parent="spine_03" />
+        <boneparent bone="ball_l" parent="foot_l" />
+        <boneparent bone="ball_r" parent="foot_r" />
+        <boneparent bone="upperarm_l" parent="clavicle_l" />
+        <boneparent bone="upperarm_r" parent="clavicle_r" />
+        <boneparent bone="head" parent="neck_01" />
+        <boneparent bone="lowerarm_l" parent="upperarm_l" />
+        <boneparent bone="lowerarm_r" parent="upperarm_r" />
+        <boneparent bone="hand_l" parent="lowerarm_l" />
+        <boneparent bone="hand_r" parent="lowerarm_r" />
+        <boneparent bone="index_01_l" parent="hand_l" />
+        <boneparent bone="middle_01_l" parent="hand_l" />
+        <boneparent bone="pinky_01_l" parent="hand_l" />
+        <boneparent bone="ring_01_l" parent="hand_l" />
+        <boneparent bone="thumb_01_l" parent="hand_l" />
+        <boneparent bone="index_01_r" parent="hand_r" />
+        <boneparent bone="middle_01_r" parent="hand_r" />
+        <boneparent bone="pinky_01_r" parent="hand_r" />
+        <boneparent bone="ring_01_r" parent="hand_r" />
+        <boneparent bone="thumb_01_r" parent="hand_r" />
+        <boneparent bone="index_02_l" parent="index_01_l" />
+        <boneparent bone="middle_02_l" parent="middle_01_l" />
+        <boneparent bone="pinky_02_l" parent="pinky_01_l" />
+        <boneparent bone="ring_02_l" parent="ring_01_l" />
+        <boneparent bone="thumb_02_l" parent="thumb_01_l" />
+        <boneparent bone="index_02_r" parent="index_01_r" />
+        <boneparent bone="middle_02_r" parent="middle_01_r" />
+        <boneparent bone="pinky_02_r" parent="pinky_01_r" />
+        <boneparent bone="ring_02_r" parent="ring_01_r" />
+        <boneparent bone="thumb_02_r" parent="thumb_01_r" />
+        <boneparent bone="index_03_l" parent="index_02_l" />
+        <boneparent bone="middle_03_l" parent="middle_02_l" />
+        <boneparent bone="pinky_03_l" parent="pinky_02_l" />
+        <boneparent bone="ring_03_l" parent="ring_02_l" />
+        <boneparent bone="thumb_03_l" parent="thumb_02_l" />
+        <boneparent bone="index_03_r" parent="index_02_r" />
+        <boneparent bone="middle_03_r" parent="middle_02_r" />
+        <boneparent bone="pinky_03_r" parent="pinky_02_r" />
+        <boneparent bone="ring_03_r" parent="ring_02_r" />
+        <boneparent bone="thumb_03_r" parent="thumb_02_r" />
+    </bonehierarchy>
+</skeleton>

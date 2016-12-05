@@ -1,0 +1,118 @@
+fileFormatVersion: 2
+guid: 113e7b08c517051429a4de3748675814
+timeCreated: 1480674024
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: afro01.obj
+    100002: base.obj
+    100004: eyebrow003.obj
+    100006: fedora.obj
+    100008: low-poly.obj
+    100010: male_casualsuit03.obj
+    100012: //RootNode
+    100014: shoes01.obj
+    100016: teeth_base.obj
+    100018: tongue01.obj
+    400000: afro01.obj
+    400002: base.obj
+    400004: eyebrow003.obj
+    400006: fedora.obj
+    400008: low-poly.obj
+    400010: male_casualsuit03.obj
+    400012: //RootNode
+    400014: shoes01.obj
+    400016: teeth_base.obj
+    400018: tongue01.obj
+    2300000: afro01.obj
+    2300002: base.obj
+    2300004: eyebrow003.obj
+    2300006: fedora.obj
+    2300008: low-poly.obj
+    2300010: male_casualsuit03.obj
+    2300012: shoes01.obj
+    2300014: teeth_base.obj
+    2300016: tongue01.obj
+    3300000: afro01.obj
+    3300002: base.obj
+    3300004: eyebrow003.obj
+    3300006: fedora.obj
+    3300008: low-poly.obj
+    3300010: male_casualsuit03.obj
+    3300012: shoes01.obj
+    3300014: teeth_base.obj
+    3300016: tongue01.obj
+    4300000: afro01.obj
+    4300002: base.obj
+    4300004: eyebrow003.obj
+    4300006: fedora.obj
+    4300008: low-poly.obj
+    4300010: male_casualsuit03.obj
+    4300012: shoes01.obj
+    4300014: teeth_base.obj
+    4300016: tongue01.obj
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

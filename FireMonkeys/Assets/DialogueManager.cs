@@ -6,7 +6,7 @@ public class DialogueManager : MonoBehaviour {
 
     public static DialogueManager Instance { get; private set; }
     private AudioClip dialogueAudio;
-    string[] fileLines;
+    string[] fileLines = new string[0];
     string displaySubtitle;
     float subtitleTime;
     int line = 0;
@@ -46,9 +46,10 @@ public class DialogueManager : MonoBehaviour {
 
     void Update()
     {
-        if (Time.time - subtitleTime > 2.5f){
+        if (line < fileLines.Length & Time.time - subtitleTime > 2.5f)
+        {
             GetComponentInChildren<Text>().text = fileLines[line++];
             subtitleTime = Time.time;
         }
-    }
+}
 }

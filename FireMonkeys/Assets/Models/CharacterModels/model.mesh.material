@@ -1,0 +1,271 @@
+material model_0_base
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 0.110000 0.110000 0.110000 1
+            diffuse 0.843000 0.639000 0.517000 1.000000
+            specular 0.300000 0.300000 0.300000 122.880000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write on
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/adaptive_skin_tone.png
+            //}
+
+        }
+    }
+}
+
+material model_1_afro01
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 1.000000 1.000000 1.000000 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 0.000000 0.000000 0.000000 64.000000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write off
+            alpha_rejection greater 128
+
+            texture_unit diffuseTexture
+            {
+                texture textures/afro_diffuse.png
+            }
+
+        }
+    }
+}
+
+material model_2_low_poly
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 0.110000 0.110000 0.110000 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 1.000000 1.000000 1.000000 128.000000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write off
+            alpha_rejection greater 128
+
+            texture_unit diffuseTexture
+            {
+                texture textures/brown_eye.png
+            }
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/skinmat_eye.png
+            //}
+
+        }
+    }
+}
+
+material model_3_eyebrow003
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 1.000000 1.000000 1.000000 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 0.000000 0.000000 0.000000 64.000000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write off
+            alpha_rejection greater 128
+
+            texture_unit diffuseTexture
+            {
+                texture textures/eyebrow003.png
+            }
+
+        }
+    }
+}
+
+material model_4_teeth_base
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 1.000000 1.000000 1.000000 1
+            diffuse 0.640000 0.640000 0.640000 1.000000
+            specular 0.854902 0.854902 0.854902 102.400000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write on
+
+            texture_unit diffuseTexture
+            {
+                texture textures/teeth.png
+            }
+
+        }
+    }
+}
+
+material model_5_tongue01
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 1.000000 1.000000 1.000000 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 0.031373 0.031373 0.031373 25.100800
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write on
+
+            texture_unit diffuseTexture
+            {
+                texture textures/tongue01_diffuse.png
+            }
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/lit_matte.png
+            //}
+
+        }
+    }
+}
+
+material model_6_shoes01
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 0.105882 0.105882 0.105882 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 0.278431 0.278431 0.278431 51.200000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write on
+
+            texture_unit diffuseTexture
+            {
+                texture textures/shoes01_diffuse.png
+            }
+
+            //texture_unit normalMapTexture
+            //{
+            //    texture textures/shoes01_normal.png
+            //}
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/lit_refl_sharp.png
+            //}
+
+        }
+    }
+}
+
+material model_7_fedora
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 1.000000 1.000000 1.000000 1
+            diffuse 0.968627 0.968627 0.968627 1.000000
+            specular 0.027451 0.027451 0.027451 51.200000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write on
+
+            texture_unit diffuseTexture
+            {
+                texture textures/fedora_texture.png
+            }
+
+        }
+    }
+}
+
+material model_8_male_casualsuit03
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 1.000000 1.000000 1.000000 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 0.027451 0.027451 0.027451 25.100800
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write on
+
+            texture_unit diffuseTexture
+            {
+                texture textures/male_casualsuit03_diffuse.png
+            }
+
+            //texture_unit normalMapTexture
+            //{
+            //    texture textures/male_casualsuit03_normal.png
+            //}
+
+            //texture_unit aoMapTexture
+            //{
+            //    texture textures/male_casualsuit03_ao.png
+            //}
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/lit_matte.png
+            //}
+
+        }
+    }
+}
