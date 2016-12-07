@@ -23,11 +23,17 @@ public class DialogueManager : MonoBehaviour {
 
     public void BeginDialogue(string dialogueFile, AudioClip passedClip)
     {
+        if(dialogueFile == null)
+        {
+            fileLines = null;
+            return;
+        }
+
         if(passedClip != null) 
             playAudio(passedClip);
         this.dialogueFile = dialogueFile;
         playSubtitle();
-        subtitleTime = Time.time;
+        subtitleTime = Time.time - 2.5f;
     }
 
     void playAudio(AudioClip passedClip)

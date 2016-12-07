@@ -80,6 +80,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
 
         bool chargeFrisbee = Input.GetMouseButtonDown(0);
         bool throwFrisbee = Input.GetMouseButtonUp(0);
+        bool shotFrisbee = Input.GetMouseButtonDown(1);
 
         if (climb)
         {
@@ -90,12 +91,16 @@ public class ClimbCharacterUserControl : MonoBehaviour
              return ClimbCharacter.Action.jump;
         else if (comeOff)
             return  ClimbCharacter.Action.comeOff;
-        else if (chargeFrisbee)
+        else if(!isChargingFrisbee && shotFrisbee)
+        {
+            return ClimbCharacter.Action.throwFrisbeeForward;
+        }
+        else if (chargeFrisbee && frisbeeThrower.HaveFrisbee)
         {
             isChargingFrisbee = true;
             return ClimbCharacter.Action.chargeFrisbee;
         }
-        else if (throwFrisbee)
+        else if (throwFrisbee && frisbeeThrower.HaveFrisbee)
         {
             frisbeeThrower.throwDirection = getThrowDirection();
             return ClimbCharacter.Action.throwFrisbee;

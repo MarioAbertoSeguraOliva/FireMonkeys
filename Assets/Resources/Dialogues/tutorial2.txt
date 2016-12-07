@@ -1,0 +1,3 @@
+Mr Narrator: Sometimes, it would be usefull to jump walls to achieve any goal.
+Mr Narrator: Try to jump that wall.
+Instruction: Use <SpaceBar> to jump that wall! When grabbing the edge of a wall keep moving forward<w> or press <SpaceBar> to climb the wall.

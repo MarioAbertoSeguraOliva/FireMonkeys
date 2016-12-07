@@ -1,0 +1,5 @@
+Mr Narrator: Weelcomeee to Cordelia City!
+Mr Narrator: Today, you are going to learn the basics skills that will help you in your great adventure.
+Instruction: To move around use <aswd> keys.
+Mr Narrator: Try to move around you.
+
