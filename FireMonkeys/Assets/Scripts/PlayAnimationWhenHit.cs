@@ -17,22 +17,11 @@ public class PlayAnimationWhenHit : MonoBehaviour {
         if (onlyOnce && played)
             return;
 
-        Debug.Log("PUM!");
         if (other.collider.CompareTag("Frisbee"))
         {
             GetComponent<Animation>().Play();
-            Debug.Log("Play...");
             played = true;
        }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            GetComponent<Animation>().Play();
-            Debug.Log("Play...");
-
-        }
-    }
 }
