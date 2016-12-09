@@ -7,9 +7,12 @@ public class ChangeColor : MonoBehaviour {
 
     public AudioClip passedClip;
 
-    void OnMouseEnter()
+    void Awake()
     {
         GetComponent<AudioSource>().clip = passedClip;
+    }
+    void OnMouseEnter()
+    {
         
     }
 
