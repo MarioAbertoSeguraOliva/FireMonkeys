@@ -19,7 +19,7 @@ public class ClimbCharacter : MonoBehaviour
     [SerializeField] float climbDuration = 1.13f;
     [SerializeField] float moveInAirFactor = 0.05f;
 
-    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, throwFrisbeeForward, comeOff };
+    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, throwFrisbeeForward, comeOff, die, punch };
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
@@ -190,15 +190,19 @@ public class ClimbCharacter : MonoBehaviour
 
 	void UpdateAnimator(Vector3 move, Action action)
 	{
-		
+        Debug.Log(action);
         // update the animator parameters
-		m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
+        m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
 		m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
 		m_Animator.SetBool("Crouch", m_Crouching);
 		m_Animator.SetBool("OnGround", m_IsGrounded);
         m_Animator.SetBool("Climb", isClimbing);
         m_Animator.SetBool("GrabTheLedge", grabTheLedge);
-        if(action == Action.throwFrisbeeForward)
+        m_Animator.SetBool("Punch", action == Action.punch);
+        if (action == Action.die)
+            m_Animator.SetTrigger("Die");
+
+        if (action == Action.throwFrisbeeForward)
         {
             m_Animator.SetBool("Throw", true);
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -18,7 +19,8 @@ public class AIEnemyControl : MonoBehaviour
         Chase = 1,
         ClimbInChase = 2,
         JumpInChase = 3,
-        die = 4
+        Die = 4,
+        Attack = 5
     }
     internal FSM fsm;
 
@@ -30,20 +32,29 @@ public class AIEnemyControl : MonoBehaviour
         climbController = GetComponentInChildren<ClimbController>();
         climbController.climbEvent += ClimbEvent;
         GetComponentInChildren<PlayerDetector>().detectPlayerEvent += OnDetectPlayer;
+        GetComponentInChildren<MeleeAttack>().attackEvent += AttackEvent;
 
         agent.updateRotation = false;
 	    agent.updatePosition = true;
 
-        fsm = new FSM(this, new FSM.StateMethod[] { Wander, Chase, ClimbInChase, JumpInChase, Die });
+
+        fsm = new FSM(this, new FSM.StateMethod[] { Wander, Chase, ClimbInChase, JumpInChase, Die, Attack });
 
         fsm.Start();
     }
 
-    
     private void ClimbEvent(bool climb)
     {
         if(climb)
             fsm.ChangeState(state.ClimbInChase);
+    }
+
+    private void AttackEvent(bool attack)
+    {
+        if(attack)
+            fsm.ChangeState(state.Attack);
+        else
+            fsm.ChangeState(state.Chase);
     }
 
     private void OnDetectPlayer(GameObject player)
@@ -115,8 +126,30 @@ public class AIEnemyControl : MonoBehaviour
 
     IEnumerator Die()
     {
+        character.Move(Vector3.zero, ClimbCharacter.Action.die);
+        yield return new WaitForSeconds(4);
         Destroy(gameObject);
         yield return 0;
+    }
+
+    //Need to improve this!!!
+    private IEnumerator Attack()
+    {
+        Debug.Log("ATTACK");
+        while (target != null && fsm.isState(state.Attack))
+        {
+            if (ShouldJump())
+            {
+                fsm.ChangeState(state.JumpInChase);
+                break;
+            }
+
+            character.Move(agent.desiredVelocity, ClimbCharacter.Action.punch);
+            agent.SetDestination(target.position);
+            yield return 0;
+        }
+        if (target == null)
+            fsm.ChangeState(state.Wander);
     }
 
     public void SetTarget(Transform target)
@@ -137,7 +170,7 @@ public class AIEnemyControl : MonoBehaviour
             //TODO: Improve
             GetComponent<Health>().Amount = 0;
 
-            fsm.ChangeState(state.die);
+            fsm.ChangeState(state.Die);
 
         }
     }
