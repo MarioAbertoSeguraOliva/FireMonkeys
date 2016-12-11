@@ -20,13 +20,15 @@ public class MeleeAttack : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (attackEvent != null)
+        LayerMask otherMask = 1 << other.gameObject.layer;
+        if (attackEvent != null && otherMask == victimLayer)
             attackEvent.Invoke(true);
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (attackEvent != null)
+        LayerMask otherMask = 1 << other.gameObject.layer;
+        if (attackEvent != null && otherMask == victimLayer)
             attackEvent.Invoke(false);
     }
 
@@ -35,7 +37,6 @@ public class MeleeAttack : MonoBehaviour {
         LayerMask otherMask = 1 << other.gameObject.layer;
         if (otherMask == victimLayer)
         {
-            Debug.Log(other.gameObject.name);
             other.gameObject.GetComponentInParent<Health>().Amount -= damagePerSecond * Time.deltaTime;
         }
     }
@@ -43,14 +44,12 @@ public class MeleeAttack : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
-        if (attackEvent != null)
-            attackEvent.Invoke(true);
+        OnTriggerEnter(other.collider);
     }
 
     void OnCollisionExit(Collision other)
     {
-        if (attackEvent != null)
-            attackEvent.Invoke(false);
+        OnTriggerExit(other.collider);
     }
 
     void OnCollisionStay(Collision other)
