@@ -18,14 +18,12 @@ public class HealthBar : MonoBehaviour {
 	
     void OnChangeHealth(float amount)
     {
+
         float maxHealth = health.maxHealth;
         bar.GetComponent<RectTransform>().localScale = 
             new Vector3(amount / maxHealth * barInitialScale.x, barInitialScale.y, barInitialScale.z);
     }
 
-	// Update is called once per frame
-	void Update () {
-	    
-	}
+
     
 }

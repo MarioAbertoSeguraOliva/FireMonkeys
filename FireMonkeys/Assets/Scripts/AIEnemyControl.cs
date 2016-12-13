@@ -11,7 +11,6 @@ public class AIEnemyControl : MonoBehaviour
     public ClimbCharacter character { get; private set; } // the character we are controlling
     public Transform target;                                    // target to aim for
     private ClimbController climbController;
-    private bool canClimb = false;
 
     protected enum state
     {

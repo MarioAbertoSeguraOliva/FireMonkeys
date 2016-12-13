@@ -18,7 +18,6 @@ public class FrisbeeThrower : MonoBehaviour {
     {
         get
         {
-            Debug.Log(frisbee.activeInHierarchy);
             return frisbee.activeInHierarchy;
         }
 

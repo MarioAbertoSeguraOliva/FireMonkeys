@@ -5,7 +5,6 @@ using UnityStandardAssets.CrossPlatformInput;
 
 
 [RequireComponent(typeof (ClimbCharacter))]
-[RequireComponent(typeof (ClimbController))]
 public class ClimbCharacterUserControl : MonoBehaviour
 {
     private ClimbCharacter m_Character;       // A reference to the ThirdPersonCharacter on the object
@@ -116,7 +115,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo))
+        if (Physics.Raycast(ray, out hitInfo, ~LayerMask.GetMask("Player")))
         {
             return (hitInfo.point - transform.position).normalized;
         }
