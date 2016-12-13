@@ -116,9 +116,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
         if (Physics.Raycast(ray, out hitInfo, ~LayerMask.GetMask("Player")))
-        {
             return (hitInfo.point - transform.position).normalized;
-        }
         else
             return ray.direction;
     }

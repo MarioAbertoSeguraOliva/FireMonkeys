@@ -64,11 +64,11 @@ public class AIEnemyControl : MonoBehaviour
 
     IEnumerator Wander()
     {
-        while (target == null)
+        while (fsm.isState(state.Wander))
         {
             yield return 0;
         }
-        fsm.ChangeState(state.Chase);
+
     }
 
     private bool ShouldJump()
@@ -158,14 +158,19 @@ public class AIEnemyControl : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.name.Equals("Frisbee(Clone)"))
+            Debug.Log("PUM: " + collision.gameObject.tag);
+
         if (fsm.isState(state.JumpInChase))
         {
             fsm.ChangeState(state.Chase);
             agent.enabled = true;
         }
 
-        if(collision.collider.CompareTag("Frisbee"))
+        if(collision.gameObject.CompareTag("Frisbee"))
         {
+
+
             //TODO: Improve
             GetComponent<Health>().Amount = 0;
 
