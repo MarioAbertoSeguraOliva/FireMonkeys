@@ -92,7 +92,7 @@ public class ClimbCharacter : MonoBehaviour
         CheckGroundStatus();
         CheckThrowStatus(action);
         move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-        m_TurnAmount = Mathf.Atan2(move.x, move.z);
+        m_TurnAmount = Mathf.Atan2(move.x, 1/*move.z*/);
         m_ForwardAmount = move.z;
         
         if(!isClimbing && !grabTheLedge) {
