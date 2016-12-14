@@ -10,7 +10,11 @@ public class AIEnemyControl : MonoBehaviour
     public NavMeshAgent agent { get; private set; }             // the navmesh agent required for the path finding
     public ClimbCharacter character { get; private set; } // the character we are controlling
     public Transform target;                                    // target to aim for
+    public float damagePerPunch = 2f;
+    public float punchPeriod = 0.4f;
     private ClimbController climbController;
+    private float dieDecayTime = 4f;
+    private GameObject victim;
 
     protected enum state
     {
@@ -48,12 +52,14 @@ public class AIEnemyControl : MonoBehaviour
             fsm.ChangeState(state.ClimbInChase);
     }
 
-    private void AttackEvent(bool attack)
+    private void AttackEvent(bool attack, GameObject victim)
     {
         if(attack)
             fsm.ChangeState(state.Attack);
         else
             fsm.ChangeState(state.Chase);
+
+        target = victim.transform;
     }
 
     private void OnDetectPlayer(GameObject player)
@@ -131,10 +137,9 @@ public class AIEnemyControl : MonoBehaviour
         yield return 0;
     }
 
-    //Need to improve this!!!
     private IEnumerator Attack()
     {
-        Debug.Log("ATTACK");
+        StartCoroutine(PunchIterator());
         while (target != null && fsm.isState(state.Attack))
         {
             if (ShouldJump())
@@ -151,17 +156,30 @@ public class AIEnemyControl : MonoBehaviour
             fsm.ChangeState(state.Wander);
     }
 
+    private IEnumerator PunchIterator()
+    {
+        do
+        {
+            target.gameObject.GetComponentInParent<Health>().Amount -= damagePerPunch;
+            yield return new WaitForSeconds(punchPeriod);
+        } while (target != null && fsm.isState(state.Attack));
+    }
+
     public void SetTarget(Transform target)
     {
         this.target = target;
+        fsm.ChangeState(state.Chase);
     }
+
+
+    //TODO: Improve damage system
 
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.name.Equals("Frisbee(Clone)"))
             Debug.Log("PUM: " + collision.gameObject.tag);
 
-        if (fsm.isState(state.JumpInChase))
+        if (fsm.isState(state.JumpInChase) && collision.impulse.normalized.y > 0.5f)
         {
             fsm.ChangeState(state.Chase);
             agent.enabled = true;
@@ -169,12 +187,24 @@ public class AIEnemyControl : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Frisbee"))
         {
-
-
-            //TODO: Improve
             GetComponent<Health>().Amount = 0;
-
             fsm.ChangeState(state.Die);
+
+        }
+
+        
+
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (collision.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Dash"))
+            {
+                GetComponent<Health>().Amount = 0;
+                fsm.ChangeState(state.Die);
+            }
 
         }
     }

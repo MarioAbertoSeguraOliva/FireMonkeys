@@ -120,6 +120,7 @@ public class FrisbeeThrower : MonoBehaviour {
         isCharging = false;
 
         frisbee.GetComponent<FrisbeeController>().Throw();
+        
     }
 
     public void charge()

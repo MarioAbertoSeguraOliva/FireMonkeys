@@ -36,7 +36,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
         m_Character = GetComponent<ClimbCharacter>();
         climbController = GetComponentInChildren<ClimbController>();
         climbController.climbEvent += ClimbEvent;
-        climbController.jumpEvent += JumpEvent;
+        //climbController.jumpEvent += JumpEvent; //Uncomment to hablity jump against wall or double jump
         frisbeeThrower = GetComponentInChildren<FrisbeeThrower>();
     }
 
@@ -85,6 +85,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
     private ClimbCharacter.Action getAction()
     {
         bool crouch = Input.GetKey(KeyCode.C);
+        bool slide = Input.GetKey(KeyCode.Q);
         bool climb = (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && m_Climb;
         bool comeOff = Input.GetKeyDown(KeyCode.E) && m_Climb;
         bool jumpWall = Input.GetKeyDown(KeyCode.Space) && canJumpWall();
@@ -108,6 +109,8 @@ public class ClimbCharacterUserControl : MonoBehaviour
             return ClimbCharacter.Action.jump;
         else if (comeOff)
             return ClimbCharacter.Action.comeOff;
+        else if (slide)
+            return ClimbCharacter.Action.dash;
         else if (!isChargingFrisbee && shotFrisbee)
         {
             return ClimbCharacter.Action.throwFrisbeeForward;

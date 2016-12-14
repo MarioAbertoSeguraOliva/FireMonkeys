@@ -3,9 +3,8 @@ using System.Collections;
 
 public class MeleeAttack : MonoBehaviour {
 
-    public float damagePerSecond = 2.5f;
     LayerMask victimLayer;
-    public delegate void AttackEvent(bool canClimb);
+    public delegate void AttackEvent(bool canAttack, GameObject victim);
     public event AttackEvent attackEvent;
 
     // Use this for initialization
@@ -22,23 +21,23 @@ public class MeleeAttack : MonoBehaviour {
     {
         LayerMask otherMask = 1 << other.gameObject.layer;
         if (attackEvent != null && otherMask == victimLayer)
-            attackEvent.Invoke(true);
+            attackEvent.Invoke(true, other.gameObject);
     }
 
     void OnTriggerExit(Collider other)
     {
         LayerMask otherMask = 1 << other.gameObject.layer;
         if (attackEvent != null && otherMask == victimLayer)
-            attackEvent.Invoke(false);
+            attackEvent.Invoke(false, other.gameObject);
     }
 
     void OnTriggerStay(Collider other)
     {
-        LayerMask otherMask = 1 << other.gameObject.layer;
+        /*LayerMask otherMask = 1 << other.gameObject.layer;
         if (otherMask == victimLayer)
         {
             other.gameObject.GetComponentInParent<Health>().Amount -= damagePerSecond * Time.deltaTime;
-        }
+        }*/
     }
 
 

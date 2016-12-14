@@ -19,7 +19,7 @@ public class ClimbCharacter : MonoBehaviour
     [SerializeField] float climbDuration = 1.13f;
     [SerializeField] float moveInAirFactor = 0.05f;
 
-    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, throwFrisbeeForward, comeOff, die, punch, jumpWall };
+    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, throwFrisbeeForward, comeOff, die, punch, jumpWall, dash };
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
@@ -212,8 +212,11 @@ public class ClimbCharacter : MonoBehaviour
         m_Animator.SetBool("Climb", isClimbing);
         m_Animator.SetBool("GrabTheLedge", grabTheLedge);
         m_Animator.SetBool("Punch", action == Action.punch);
+        m_Animator.SetBool("Dash", action == Action.dash && m_IsGrounded);
+
         if (action == Action.die)
             m_Animator.SetTrigger("Die");
+
 
         if (action == Action.throwFrisbeeForward)
         {
