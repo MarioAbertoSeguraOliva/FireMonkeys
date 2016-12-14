@@ -19,7 +19,7 @@ public class ClimbCharacter : MonoBehaviour
     [SerializeField] float climbDuration = 1.13f;
     [SerializeField] float moveInAirFactor = 0.05f;
 
-    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, throwFrisbeeForward, comeOff, die, punch };
+    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, throwFrisbeeForward, comeOff, die, punch, jumpWall };
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
@@ -99,6 +99,9 @@ public class ClimbCharacter : MonoBehaviour
 
             ApplyExtraTurnRotation();
 
+            if (action == Action.jumpWall)
+                jumpAgainstWall();
+
             // control and velocity handling is different when grounded and airborne:
             if (m_IsGrounded)
             {
@@ -117,6 +120,17 @@ public class ClimbCharacter : MonoBehaviour
 		// send input and other state parameters to the animator
 		UpdateAnimator(move, action);
 
+    }
+
+    private void jumpAgainstWall()
+    {
+        Vector3 jumpDir = climbController.normalJump.normalized;
+        jumpDir.y = 0.5f;
+        Debug.Log("JUMP "+ jumpDir.ToString());
+        //m_Rigidbody.velocity = jumpDir.normalized * m_JumpPower * 5;
+        m_Rigidbody.AddForce( jumpDir.normalized * m_JumpPower * 5, ForceMode.VelocityChange);
+
+        transform.forward = new Vector3(jumpDir.x, 0, jumpDir.z).normalized;
     }
 
     private void CheckThrowStatus(Action action)

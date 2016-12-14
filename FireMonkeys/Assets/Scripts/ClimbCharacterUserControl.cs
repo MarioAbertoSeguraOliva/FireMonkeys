@@ -11,7 +11,9 @@ public class ClimbCharacterUserControl : MonoBehaviour
     private ClimbController climbController;   // A reference to the ClimbController on the object
     private Transform m_Cam;                  // A reference to the main camera in the scenes transform
     private Vector3 m_CamForward;             // The current forward direction of the camera
-    private bool m_Jump;                      
+    private bool m_Jump;
+    private float m_JumpWallTimestamp;
+    private const float jumpWallTimeOut = 0.25f;
     private bool m_Climb;
     private bool isChargingFrisbee = false;
     private FrisbeeThrower frisbeeThrower;
@@ -34,12 +36,17 @@ public class ClimbCharacterUserControl : MonoBehaviour
         m_Character = GetComponent<ClimbCharacter>();
         climbController = GetComponentInChildren<ClimbController>();
         climbController.climbEvent += ClimbEvent;
+        climbController.jumpEvent += JumpEvent;
         frisbeeThrower = GetComponentInChildren<FrisbeeThrower>();
     }
 
     private void ClimbEvent(bool canClimb)
     {
         m_Climb = canClimb;
+    }
+
+    private void JumpEvent(bool none) {
+        m_JumpWallTimestamp = Time.time;
     }
 
     private void Update()
@@ -70,11 +77,17 @@ public class ClimbCharacterUserControl : MonoBehaviour
         m_Jump = false;
     }
 
+    private bool canJumpWall()
+    {
+        return Time.time - m_JumpWallTimestamp < m_JumpWallTimestamp;
+    }
+
     private ClimbCharacter.Action getAction()
     {
         bool crouch = Input.GetKey(KeyCode.C);
         bool climb = (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && m_Climb;
         bool comeOff = Input.GetKeyDown(KeyCode.E) && m_Climb;
+        bool jumpWall = Input.GetKeyDown(KeyCode.Space) && canJumpWall();
         //bool climb = CrossPlatformInputManager.GetAxis("Vertical") > 0 && m_Climb;
 
         bool chargeFrisbee = Input.GetMouseButtonDown(0);
@@ -84,13 +97,18 @@ public class ClimbCharacterUserControl : MonoBehaviour
         if (climb)
         {
             m_Character.climbFinalPosition = climbController.climbPos;
-            return ClimbCharacter.Action.climb;     
+            return ClimbCharacter.Action.climb;
+        }
+        else if (jumpWall)
+        {
+            m_JumpWallTimestamp = 0;
+            return ClimbCharacter.Action.jumpWall;
         }
         else if (m_Jump)
-             return ClimbCharacter.Action.jump;
+            return ClimbCharacter.Action.jump;
         else if (comeOff)
-            return  ClimbCharacter.Action.comeOff;
-        else if(!isChargingFrisbee && shotFrisbee)
+            return ClimbCharacter.Action.comeOff;
+        else if (!isChargingFrisbee && shotFrisbee)
         {
             return ClimbCharacter.Action.throwFrisbeeForward;
         }

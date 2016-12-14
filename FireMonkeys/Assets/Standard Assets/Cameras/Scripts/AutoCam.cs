@@ -97,7 +97,7 @@ namespace UnityStandardAssets.Cameras
                     targetForward = transform.forward;
                 }
             }
-            var rollRotation = Quaternion.LookRotation(targetForward, m_RollUp);
+            var rollRotation = (targetForward == Vector3.zero)? Quaternion.identity :Quaternion.LookRotation(targetForward, m_RollUp);
 
             // and aligning with the target object's up direction (i.e. its 'roll')
             m_RollUp = m_RollSpeed > 0 ? Vector3.Slerp(m_RollUp, targetUp, m_RollSpeed*deltaTime) : Vector3.up;

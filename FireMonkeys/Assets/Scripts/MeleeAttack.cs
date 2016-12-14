@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MeleeAttack : MonoBehaviour {
 
-    float damagePerSecond = 10;
+    public float damagePerSecond = 2.5f;
     LayerMask victimLayer;
     public delegate void AttackEvent(bool canClimb);
     public event AttackEvent attackEvent;

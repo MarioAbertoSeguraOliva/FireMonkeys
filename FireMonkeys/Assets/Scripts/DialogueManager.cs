@@ -56,7 +56,7 @@ public class DialogueManager : MonoBehaviour {
 
     void Update()
     {
-        if (fileLines != null && Time.time - subtitleTime > 2.5f && line < fileLines.Length)
+        if (fileLines != null && Time.time - subtitleTime > 3.5f && line < fileLines.Length)
         {
             GetComponentInChildren<Text>().text = fileLines[line++];
             subtitleTime = Time.time;
