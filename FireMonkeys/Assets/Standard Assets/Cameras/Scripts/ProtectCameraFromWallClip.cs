@@ -100,7 +100,7 @@ namespace UnityStandardAssets.Cameras
 
             #region check the colliders pls
             RaycastHit hitInfo;
-            Vector3 target = transform.parent.position + Vector3.up * 1.5f;
+            Vector3 target = m_Pivot.position + Vector3.up * 1.5f;
             Vector3 direction = m_Cam.position - target;
             if (Physics.Raycast(target, direction, out hitInfo, direction.magnitude, ~LayerMask.GetMask("Player")))
             {

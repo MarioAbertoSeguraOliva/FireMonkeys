@@ -158,9 +158,17 @@ public class AIEnemyControl : MonoBehaviour
 
     private IEnumerator PunchIterator()
     {
+        Health victimHealth = target.gameObject.GetComponentInParent<Health>();
         do
         {
-            target.gameObject.GetComponentInParent<Health>().Amount -= damagePerPunch;
+            victimHealth.Amount -= damagePerPunch;
+            if (victimHealth.isDead())
+            {
+                target = null;
+                fsm.ChangeState(state.Wander);
+                break;
+            }
+
             yield return new WaitForSeconds(punchPeriod);
         } while (target != null && fsm.isState(state.Attack));
     }

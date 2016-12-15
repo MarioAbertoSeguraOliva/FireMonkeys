@@ -39,6 +39,7 @@ public class ClimbCharacter : MonoBehaviour
     Vector3 climbInitPosition;
     [HideInInspector] public Vector3 climbFinalPosition;
     private ClimbController climbController;
+    private bool m_dashing = false;
 
     void Start()
 	{
@@ -171,7 +172,13 @@ public class ClimbCharacter : MonoBehaviour
 			m_Capsule.height = m_Capsule.height / 2f;
 			m_Capsule.center = m_Capsule.center / 2f;
 			m_Crouching = true;
-		}
+		}else if (!m_Crouching && (m_dashing || action == Action.dash))
+        {
+            if (m_dashing) return;
+            m_Capsule.height = m_Capsule.height / 2f;
+            m_Capsule.center = m_Capsule.center / 2f;
+            m_dashing = true;
+        }
 		else
 		{
 			Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
@@ -190,7 +197,7 @@ public class ClimbCharacter : MonoBehaviour
 	void PreventStandingInLowHeadroom()
 	{
 		// prevent standing up in crouch-only zones
-		if (!m_Crouching)
+		if (!m_Crouching && !m_dashing)
 		{
 			Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
 			float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
@@ -241,6 +248,9 @@ public class ClimbCharacter : MonoBehaviour
 		if (m_IsGrounded)
 			m_Animator.SetFloat("JumpLeg", jumpLeg);
 
+
+        if (m_dashing && !m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
+            m_dashing = false;
 
 		// the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
 		// which affects the movement speed because of the root motion.

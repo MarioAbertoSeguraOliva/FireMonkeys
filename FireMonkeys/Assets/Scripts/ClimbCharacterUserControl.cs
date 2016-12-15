@@ -16,6 +16,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
     private const float jumpWallTimeOut = 0.25f;
     private bool m_Climb;
     private bool isChargingFrisbee = false;
+    private bool isDead = false;
     private FrisbeeThrower frisbeeThrower;
 
     private void Start()
@@ -38,6 +39,14 @@ public class ClimbCharacterUserControl : MonoBehaviour
         climbController.climbEvent += ClimbEvent;
         //climbController.jumpEvent += JumpEvent; //Uncomment to hablity jump against wall or double jump
         frisbeeThrower = GetComponentInChildren<FrisbeeThrower>();
+        GetComponent<Health>().onChangeHealthEvent += ChangeHealth;
+    }
+
+    internal void Respawn()
+    {
+        GetComponent<Health>().Revive();
+        GetComponent<Animator>().Rebind();
+        isDead = false;
     }
 
     private void ClimbEvent(bool canClimb)
@@ -47,6 +56,17 @@ public class ClimbCharacterUserControl : MonoBehaviour
 
     private void JumpEvent(bool none) {
         m_JumpWallTimestamp = Time.time;
+    }
+
+    private void ChangeHealth(float newHealth)
+    {
+        if(newHealth == 0 && !isDead)
+        {
+            isDead = true;
+            GetComponent<GameOverManager>().OnGameOver();
+            m_Character.Move(Vector3.zero, ClimbCharacter.Action.die);
+        }
+
     }
 
     private void Update()
@@ -59,6 +79,11 @@ public class ClimbCharacterUserControl : MonoBehaviour
     // Fixed update is called in sync with physics
     private void FixedUpdate()
     {
+        if (isDead)
+        {
+            
+            return;
+        }
 
         Vector3 m_Move = calculateMove();
 

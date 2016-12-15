@@ -60,7 +60,7 @@ public class DialogueManager : MonoBehaviour {
         {
             GetComponentInChildren<Text>().text = fileLines[line++];
             subtitleTime = Time.time;
-        }else if(line > fileLines.Length)
+        }else if(fileLines == null || line > fileLines.Length)
         {
             GetComponentInChildren<Text>().text = "";
         }

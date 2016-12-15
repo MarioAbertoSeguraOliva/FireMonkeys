@@ -39,5 +39,15 @@ public class Health : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
             Amount -= 5;
     }
+
+    internal bool isDead()
+    {
+        return health <= 0;
+    }
+
+    internal void Revive()
+    {
+        Amount = initHealth;
+    }
 }
 
