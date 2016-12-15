@@ -26,6 +26,7 @@ public class AIEnemyControl : MonoBehaviour
         Attack = 5
     }
     internal FSM fsm;
+    private SoundManager m_Sound;
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class AIEnemyControl : MonoBehaviour
         climbController.climbEvent += ClimbEvent;
         GetComponentInChildren<PlayerDetector>().detectPlayerEvent += OnDetectPlayer;
         GetComponentInChildren<MeleeAttack>().attackEvent += AttackEvent;
+        m_Sound = GetComponent<SoundManager>();
 
         agent.updateRotation = false;
 	    agent.updatePosition = true;
@@ -162,6 +164,7 @@ public class AIEnemyControl : MonoBehaviour
         do
         {
             victimHealth.Amount -= damagePerPunch;
+            m_Sound.Play("Punch");
             if (victimHealth.isDead())
             {
                 target = null;

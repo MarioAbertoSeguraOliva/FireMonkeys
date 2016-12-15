@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour {
 
     public static DialogueManager Instance { get; private set; }
-    private AudioClip dialogueAudio;
     string[] fileLines;
     string displaySubtitle;
     string dialogueFile;
@@ -38,7 +37,6 @@ public class DialogueManager : MonoBehaviour {
 
     void playAudio(AudioClip passedClip)
     {
-        dialogueAudio = passedClip;
         GetComponent<AudioSource>().clip = passedClip;
         GetComponent<AudioSource>().Play();
     }

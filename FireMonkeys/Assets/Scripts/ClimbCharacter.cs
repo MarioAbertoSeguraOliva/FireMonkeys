@@ -40,13 +40,15 @@ public class ClimbCharacter : MonoBehaviour
     [HideInInspector] public Vector3 climbFinalPosition;
     private ClimbController climbController;
     private bool m_dashing = false;
+    private SoundManager m_Sound;
 
     void Start()
 	{
 		m_Animator = GetComponent<Animator>();
 		m_Rigidbody = GetComponent<Rigidbody>();
 		m_Capsule = GetComponent<CapsuleCollider>();
-		m_CapsuleHeight = m_Capsule.height;
+        m_Sound = GetComponent<SoundManager>();
+        m_CapsuleHeight = m_Capsule.height;
 		m_CapsuleCenter = m_Capsule.center;
 
 		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
@@ -67,7 +69,9 @@ public class ClimbCharacter : MonoBehaviour
             climbFinalPosition = climbController.climbPos;
             pos.y = climbFinalPosition.y - 1.6f;
             transform.position = pos;
-        }else
+            m_Sound.Play("Grab");
+        }
+        else
         {
             m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.isKinematic = false;
@@ -130,6 +134,8 @@ public class ClimbCharacter : MonoBehaviour
 
 		// send input and other state parameters to the animator
 		UpdateAnimator(move, action);
+
+        PlaySoundOf(action, move);
 
     }
 
@@ -218,6 +224,7 @@ public class ClimbCharacter : MonoBehaviour
 		}
 	}
 
+    float lastJumpLeg = 1;
 
 	void UpdateAnimator(Vector3 move, Action action)
 	{
@@ -258,6 +265,9 @@ public class ClimbCharacter : MonoBehaviour
 		if (m_IsGrounded)
 			m_Animator.SetFloat("JumpLeg", jumpLeg);
 
+        if (m_IsGrounded && lastJumpLeg != jumpLeg)  m_Sound.Play("Walk");
+
+        lastJumpLeg = jumpLeg;
 
         if (m_dashing && !m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
             m_dashing = false;
@@ -334,10 +344,13 @@ public class ClimbCharacter : MonoBehaviour
 		// it is also good to note that the transform position in the sample assets is at the base of the character
 		if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
 		{
+            if(!m_IsGrounded)
+                m_Sound.Play("Fall");
+
 			m_GroundNormal = hitInfo.normal;
 			m_IsGrounded = true;
 			m_Animator.applyRootMotion = true;
-		}
+        }
 		else
 		{
 			m_IsGrounded = false;
@@ -352,5 +365,44 @@ public class ClimbCharacter : MonoBehaviour
             grabTheLedge = false;
         }
     }
+
+    bool playedDash = false;
+
+    private void PlaySoundOf(Action action, Vector3 move)
+    {
+
+        if (action == Action.throwFrisbee || action == Action.throwFrisbeeForward)
+        {
+            if (m_Sound.isPlaying("Charge Frisbee"))
+                m_Sound.Stop();
+
+            m_Sound.Play("Frisbee");
+        }
+        else if (action == Action.dash && m_dashing)
+        {
+
+            m_Sound.Play("Dash");
+            playedDash = true;
+        }
+        else if ((action == Action.jump && m_IsGrounded ) || action == Action.jumpWall || action == Action.die)
+        {
+            if (!m_Sound.isPlaying("Jump"))
+                m_Sound.Stop();
+            m_Sound.Play("Jump");
+        }
+        else if (action == Action.chargeFrisbee)
+        {
+            m_Sound.Stop();
+            m_Sound.Play("Charge Frisbee");
+        }
+        else if (action == Action.climb)
+        {
+            m_Sound.Stop();
+            m_Sound.Play("Climb");
+        }
+
+        if (!m_dashing) playedDash = false;
+    }
+
 }
 

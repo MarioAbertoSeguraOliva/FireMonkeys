@@ -44,6 +44,11 @@ public class ClimbController : MonoBehaviour
         secondCheckMask = ignoreRaycastMask & ~LayerMask.GetMask("Player") & ~enemyMask;
     }
 
+    void Start()
+    {
+        if (entity == null) entity = transform.parent.gameObject;
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (AvoidBadCases(other))
