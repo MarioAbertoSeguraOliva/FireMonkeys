@@ -184,8 +184,6 @@ public class AIEnemyControl : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name.Equals("Frisbee(Clone)"))
-            Debug.Log("PUM: " + collision.gameObject.tag);
 
         if (fsm.isState(state.JumpInChase) && collision.impulse.normalized.y > 0.5f)
         {

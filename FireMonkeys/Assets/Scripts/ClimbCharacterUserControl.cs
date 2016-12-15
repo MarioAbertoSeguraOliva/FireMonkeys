@@ -54,7 +54,7 @@ public class ClimbCharacterUserControl : MonoBehaviour
         m_Climb = canClimb;
     }
 
-    private void JumpEvent(bool none) {
+    private void JumpEvent() {
         m_JumpWallTimestamp = Time.time;
     }
 

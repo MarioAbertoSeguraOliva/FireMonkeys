@@ -8,21 +8,23 @@ public class ClimbController : MonoBehaviour {
     [SerializeField] float radiusColliderRatio = 2f;
     [Range(0f, 1f)] [SerializeField] float allowedFlatness = 0.65f;
     [SerializeField] float frontOffset = 0.3f;
-    [SerializeField] float upOffsetWhenClimb = 0.2f; //Remove errors
+    [SerializeField] float upOffsetWhenClimb = 0.2f;
+    [SerializeField] float moveSlope = 0.2f;
 
     private bool canClimb = false;
+    private bool canJump = false;
 
     public Vector3 climbPos;
     public Vector3 normalJump;
-    public delegate void EventType(bool canDoIt);
-    public event EventType climbEvent;
-    public event EventType jumpEvent;
+    public delegate void ClimbEvent(bool canDoIt);
+    public event ClimbEvent climbEvent;
+    public delegate void JumpEvent();
+    public event JumpEvent jumpEvent;
 
     private static int ignoreRaycastMask;
     private static int secondCheckMask;
     private static int enemyMask;
 
-    private bool canJump = false;
 
     void Awake()
     {
@@ -33,94 +35,112 @@ public class ClimbController : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        LayerMask otherMask = 1 << other.gameObject.layer;
-        if (other.isTrigger || other.CompareTag("Player") || otherMask == enemyMask)
+        if (AvoidBadCases(other))
             return;
 
-        bool nowCanClimb = CheckIfCanClimb(out climbPos);
-        if (nowCanClimb != canClimb)
+        DetectClimb();
+        DetectDoubleJump();
+    }
+
+    private static bool AvoidBadCases(Collider other)
+    {
+        return other.isTrigger || other.CompareTag("Player") || (1 << other.gameObject.layer) == enemyMask;
+    }
+
+
+    private void DetectClimb()
+    {
+        if (climbEvent != null && CheckIfCanClimb() != canClimb)
         {
-            canClimb = nowCanClimb;
-            if(climbEvent != null)
-                climbEvent.Invoke(canClimb);
-        }
-
-        /*if (!nowCanClimb)
-            Debug.Log("nop " + canJump );*/
-
-        if(canJump && jumpEvent != null)
-        {
-            canJump = false;
-            Vector3 rayStart = transform.position;
-            rayStart.y = GetComponent<BoxCollider>().bounds.center.y;
-            RaycastHit hit;
-
-            if (Physics.Raycast(rayStart, transform.forward,
-                out hit, frontOffset * 2.5f,
-                secondCheckMask))
-            {
-                normalJump = hit.normal;
-/*#if UNITY_EDITOR
-                // helper to visualise the ground check ray in the scene view
-                Debug.DrawLine(hit.point, hit.point + hit.normal);
-                Debug.DrawLine(hit.point, hit.point + Vector3.up * 0.4f, Color.cyan);
-                Debug.Break();
-#endif*/
-                jumpEvent.Invoke(true);
-            }
+            canClimb = !canClimb;
+            climbEvent.Invoke(canClimb);
         }
     }
 
-    private bool CheckIfCanClimb(out Vector3 climbPos)
+    private void DetectDoubleJump()
     {
-        climbPos = Vector3.zero;
-        canJump = true;
-
-        CapsuleCollider personCollider = person.GetComponent<CapsuleCollider>();
-        Vector3 top = new Vector3(
-            GetComponent<BoxCollider>().bounds.center.x,
-            GetComponent<BoxCollider>().bounds.max.y,
-            GetComponent<BoxCollider>().bounds.center.z
-        ) + person.transform.forward * frontOffset;
-
         RaycastHit hit;
-
-        bool haveASurfaceToClimb = Physics.Raycast(top, Vector3.down,
-            out hit, GetComponent<BoxCollider>().bounds.size.y,
-            ignoreRaycastMask);
-
-        bool surfaceIsNotFlat = hit.normal.y < allowedFlatness;
-
-        if (haveASurfaceToClimb)
-            canJump = false;
-
-        if (!haveASurfaceToClimb || surfaceIsNotFlat)
+        if (canJump && jumpEvent != null && TryToGetJumpHit(out hit))
         {
-            return false;
+            normalJump = hit.normal;
+            jumpEvent.Invoke();
+            /*#if UNITY_EDITOR
+                            // helper to visualise the ground check ray in the scene view
+                            Debug.DrawLine(hit.point, hit.point + hit.normal);
+                            Debug.DrawLine(hit.point, hit.point + Vector3.up * 0.4f, Color.cyan);
+                            Debug.Break();
+            #endif*/
         }
-            
+    }
 
-        climbPos = hit.point;
+    private bool TryToGetJumpHit(out RaycastHit hit)
+    {
+        Vector3 rayStart = transform.position;
+        rayStart.y = GetComponent<BoxCollider>().bounds.center.y;
+        canJump = false;
+
+        return Physics.Raycast(rayStart,
+            transform.forward,
+            out hit, frontOffset * 2.5f,
+            secondCheckMask);
+    }
+
+    private bool CheckIfCanClimb()
+    {
+        RaycastHit hit;
+        if (!CheckSurfaceTest(out hit)) return false;
+
+        climbPos = hit.point; //Improve
         climbPos.y += upOffsetWhenClimb;
 
+        if (!CheckColliderTest()) return false;
+
+        return !EntityCanFitTest();
+    }
+
+    private bool EntityCanFitTest()
+    {
+        CapsuleCollider personCollider = person.GetComponent<CapsuleCollider>();
+        return Physics.CapsuleCast(
+                        climbPos,
+                        climbPos + new Vector3(0, personCollider.height, 0),
+                        personCollider.radius * radiusColliderRatio,
+                        Vector3.up
+                    );
+    }
+
+    bool CheckSurfaceTest(out RaycastHit hit)
+    {
+        Vector3 top = CalculateTopOfTheClimbPos();
+        bool haveASurfaceToClimb = Physics.Raycast(top,
+                                   Vector3.down, out hit,
+                                   GetComponent<BoxCollider>().bounds.size.y,
+                                   ignoreRaycastMask);
+        bool surfaceIsFlat = hit.normal.y > allowedFlatness;
+
+        canJump = !haveASurfaceToClimb;
+        return haveASurfaceToClimb && surfaceIsFlat;
+    }
+
+    private Vector3 CalculateTopOfTheClimbPos()
+    {
+        Vector3 top = GetComponent<BoxCollider>().bounds.center;
+        top.y = GetComponent<BoxCollider>().bounds.max.y;
+
+        return top + person.transform.forward * frontOffset;
+    }
+
+    bool CheckColliderTest()
+    {
         Vector3 rayStart = transform.position;
         rayStart.y = climbPos.y;
         Vector3 ray = climbPos - rayStart;
 
-        if(Physics.Raycast(rayStart, ray,
-            out hit, ray.magnitude,
-            secondCheckMask))
-        {
-            return false;
-        }
-
-        return !Physics.CapsuleCast(
-                hit.point,
-                hit.point + new Vector3(0, personCollider.height, 0),
-                personCollider.radius * radiusColliderRatio,
-                Vector3.up
-            ); ;
-        }
+        return !Physics.Raycast(rayStart,
+            ray,
+            ray.magnitude,
+            secondCheckMask);
+    }
 
 
     void OnTriggerExit(Collider other)
