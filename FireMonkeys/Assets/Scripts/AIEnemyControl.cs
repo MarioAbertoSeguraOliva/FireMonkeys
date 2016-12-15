@@ -132,7 +132,7 @@ public class AIEnemyControl : MonoBehaviour
     IEnumerator Die()
     {
         character.Move(Vector3.zero, ClimbCharacter.Action.die);
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(dieDecayTime);
         Destroy(gameObject);
         yield return 0;
     }

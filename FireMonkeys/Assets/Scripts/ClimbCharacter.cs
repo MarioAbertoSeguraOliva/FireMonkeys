@@ -54,7 +54,8 @@ public class ClimbCharacter : MonoBehaviour
 
         climbController = GetComponentInChildren<ClimbController>();
         climbController.climbEvent += OnClimb;
-	}
+        climbController.climbSlopeEvent += OnAutoClimbSlope;
+    }
 
     void OnClimb(bool canClimb)
     {
@@ -70,6 +71,15 @@ public class ClimbCharacter : MonoBehaviour
         {
             m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.isKinematic = false;
+        }
+    }
+
+    void OnAutoClimbSlope(bool canClimb)
+    {
+        if (canClimb)
+        {
+            Vector3 newPos = climbController.climbPos;
+            transform.position = newPos;
         }
     }
 

@@ -4,14 +4,12 @@ using System.Collections;
 public class HealthBar : MonoBehaviour {
 
     public Health health;
-    private GameObject background;
     private GameObject bar;
     private Vector3 barInitialScale;
 
     // Use this for initialization
     void Start () {
         health.onChangeHealthEvent += OnChangeHealth;
-        background = transform.FindChild("Background").gameObject;
         bar = transform.FindChild("Bar").gameObject;
         barInitialScale = bar.GetComponent<RectTransform>().localScale;
     }

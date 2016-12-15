@@ -1,15 +1,26 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
+using System;
 
-[RequireComponent (typeof (BoxCollider))]
-public class ClimbController : MonoBehaviour {
+[RequireComponent(typeof(BoxCollider))]
+[ExecuteInEditMode]
+public class ClimbController : MonoBehaviour
+{
 
-    [SerializeField] GameObject person;
-    [SerializeField] float radiusColliderRatio = 2f;
-    [Range(0f, 1f)] [SerializeField] float allowedFlatness = 0.65f;
-    [SerializeField] float frontOffset = 0.3f;
-    [SerializeField] float upOffsetWhenClimb = 0.2f;
-    [SerializeField] float moveSlope = 0.2f;
+    [SerializeField]
+    GameObject entity;
+    [SerializeField]
+    float radiusColliderRatio = 2f;
+    [Range(0f, 1f)]
+    [SerializeField]
+    float allowedFlatness = 0.65f;
+    [SerializeField]
+    float frontOffset = 0.3f;
+    [SerializeField]
+    float upOffsetWhenClimb = 0.2f;
+    [SerializeField]
+    float autoClimbSlopeHeight = 0.2f;
 
     private bool canClimb = false;
     private bool canJump = false;
@@ -18,13 +29,13 @@ public class ClimbController : MonoBehaviour {
     public Vector3 normalJump;
     public delegate void ClimbEvent(bool canDoIt);
     public event ClimbEvent climbEvent;
+    public event ClimbEvent climbSlopeEvent;
     public delegate void JumpEvent();
     public event JumpEvent jumpEvent;
 
     private static int ignoreRaycastMask;
     private static int secondCheckMask;
     private static int enemyMask;
-
 
     void Awake()
     {
@@ -50,11 +61,20 @@ public class ClimbController : MonoBehaviour {
 
     private void DetectClimb()
     {
-        if (climbEvent != null && CheckIfCanClimb() != canClimb)
+        if (CheckIfCanClimb() != canClimb)
         {
             canClimb = !canClimb;
-            climbEvent.Invoke(canClimb);
+
+            if (moveDirectly() && climbSlopeEvent != null) climbSlopeEvent.Invoke(canClimb);
+            else if (climbEvent != null) climbEvent.Invoke(canClimb);
+
         }
+    }
+
+    private bool moveDirectly()
+    {
+        float bottom = GetComponent<BoxCollider>().bounds.min.y;
+        return bottom + autoClimbSlopeHeight > climbPos.y - upOffsetWhenClimb;
     }
 
     private void DetectDoubleJump()
@@ -100,11 +120,11 @@ public class ClimbController : MonoBehaviour {
 
     private bool EntityCanFitTest()
     {
-        CapsuleCollider personCollider = person.GetComponent<CapsuleCollider>();
+        CapsuleCollider entityCollider = entity.GetComponent<CapsuleCollider>();
         return Physics.CapsuleCast(
                         climbPos,
-                        climbPos + new Vector3(0, personCollider.height, 0),
-                        personCollider.radius * radiusColliderRatio,
+                        climbPos + new Vector3(0, entityCollider.height, 0),
+                        entityCollider.radius * radiusColliderRatio,
                         Vector3.up
                     );
     }
@@ -127,7 +147,7 @@ public class ClimbController : MonoBehaviour {
         Vector3 top = GetComponent<BoxCollider>().bounds.center;
         top.y = GetComponent<BoxCollider>().bounds.max.y;
 
-        return top + person.transform.forward * frontOffset;
+        return top + entity.transform.forward * frontOffset;
     }
 
     bool CheckColliderTest()
@@ -149,4 +169,18 @@ public class ClimbController : MonoBehaviour {
         climbEvent.Invoke(false);
     }
 
+
+    void Update()
+    {
+#if UNITY_EDITOR
+        // helper to visualise the slope autoclimb height
+        Bounds colliderBounds = GetComponent<BoxCollider>().bounds;
+        float autoClimbHeight = colliderBounds.min.y + autoClimbSlopeHeight;
+        Vector3 point1 = colliderBounds.min;
+        point1.y = autoClimbHeight;
+        Vector3 point2 = new Vector3( colliderBounds.min.x, autoClimbHeight, colliderBounds.max.z );
+        Debug.DrawLine(point1, point2, Color.green);
+#endif
+
+    }
 }

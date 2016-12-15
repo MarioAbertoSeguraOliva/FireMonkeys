@@ -3,9 +3,9 @@ using System.Collections;
 
 public class ActivateCamera : MonoBehaviour {
 
-    public GameObject camera;
+    public new GameObject camera;
 
-	void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
