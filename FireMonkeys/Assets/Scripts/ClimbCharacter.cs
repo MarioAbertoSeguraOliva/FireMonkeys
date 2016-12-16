@@ -265,7 +265,7 @@ public class ClimbCharacter : MonoBehaviour
 		if (m_IsGrounded)
 			m_Animator.SetFloat("JumpLeg", jumpLeg);
 
-        if (m_IsGrounded && lastJumpLeg != jumpLeg)  m_Sound.Play("Walk");
+        if (m_IsGrounded && lastJumpLeg != jumpLeg && Mathf.Abs(m_TurnAmount) < 0.0001)  m_Sound.Play("Walk");
 
         lastJumpLeg = jumpLeg;
 
@@ -302,6 +302,8 @@ public class ClimbCharacter : MonoBehaviour
 		{
 			// jump!
 			m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
+            if (m_IsGrounded)
+                m_Sound.Play("Jump");
 			m_IsGrounded = false;
 			m_Animator.applyRootMotion = false;
 			m_GroundCheckDistance = 0.1f;
@@ -353,7 +355,9 @@ public class ClimbCharacter : MonoBehaviour
         }
 		else
 		{
-			m_IsGrounded = false;
+            if (m_IsGrounded)
+                m_Sound.Play("Jump");
+            m_IsGrounded = false;
 			m_GroundNormal = Vector3.up;
 			m_Animator.applyRootMotion = false;
 		}
@@ -384,20 +388,16 @@ public class ClimbCharacter : MonoBehaviour
             m_Sound.Play("Dash");
             playedDash = true;
         }
-        else if ((action == Action.jump && m_IsGrounded ) || action == Action.jumpWall || action == Action.die)
+        else if (action == Action.jumpWall || action == Action.die)
         {
-            if (!m_Sound.isPlaying("Jump"))
-                m_Sound.Stop();
             m_Sound.Play("Jump");
         }
         else if (action == Action.chargeFrisbee)
         {
-            m_Sound.Stop();
             m_Sound.Play("Charge Frisbee");
         }
         else if (action == Action.climb)
         {
-            m_Sound.Stop();
             m_Sound.Play("Climb");
         }
 

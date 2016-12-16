@@ -6,6 +6,8 @@ using System.Collections;
 public class PlayAnimationWhenHit : MonoBehaviour {
 
     [SerializeField]private bool onlyOnce = true;
+    [SerializeField]private AudioClip sound;
+    [SerializeField]private float soundTimeOut;
     private bool played = false;
 
 	void Start () {
@@ -20,8 +22,16 @@ public class PlayAnimationWhenHit : MonoBehaviour {
         if (other.collider.CompareTag("Frisbee"))
         {
             GetComponent<Animation>().Play();
+            if (sound)
+                StartCoroutine(SoundRoutine());
             played = true;
        }
+    }
+
+    IEnumerator SoundRoutine()
+    {
+        yield return new WaitForSeconds(soundTimeOut);
+        GetComponent<AudioSource>().PlayOneShot(sound);
     }
 
 }

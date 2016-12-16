@@ -1,0 +1,5 @@
+Mr Narrator: WAIT! STOP!
+Mr Narrator: That guy in the backyard is an ENEMY
+Mr Narrator: Attack him with the frisbee
+Mr Narrator: Or do a dash with Q
+Instructions: Use <Q> to do a SLIDE/DASH to attack enemys

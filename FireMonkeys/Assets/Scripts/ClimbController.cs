@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
-using System;
 
 [RequireComponent(typeof(BoxCollider))]
-[ExecuteInEditMode]
 public class ClimbController : MonoBehaviour
 {
 
