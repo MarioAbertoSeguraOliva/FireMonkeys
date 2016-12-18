@@ -139,4 +139,11 @@ public class FrisbeeThrower : MonoBehaviour {
 
     }
 
+    public Vector3 HandPosition{
+        get{
+            return hand.position;
+        }
+    }
+
+
 }

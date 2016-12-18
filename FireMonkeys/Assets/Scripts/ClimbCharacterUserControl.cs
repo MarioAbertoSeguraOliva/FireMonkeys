@@ -79,12 +79,8 @@ public class ClimbCharacterUserControl : MonoBehaviour
     // Fixed update is called in sync with physics
     private void FixedUpdate()
     {
-        if (isDead)
-        {
-            
-            return;
-        }
-
+        if (isDead) return;
+        
         Vector3 m_Move = calculateMove();
 
         ClimbCharacter.Action action = getAction();
@@ -161,8 +157,8 @@ public class ClimbCharacterUserControl : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, ~LayerMask.GetMask("Player")))
-            return (hitInfo.point - transform.position).normalized;
+        if (Physics.Raycast(ray, out hitInfo, float.PositiveInfinity, ~LayerMask.GetMask("Player")))
+            return (hitInfo.point - frisbeeThrower.HandPosition).normalized;
         else
             return ray.direction;
     }
