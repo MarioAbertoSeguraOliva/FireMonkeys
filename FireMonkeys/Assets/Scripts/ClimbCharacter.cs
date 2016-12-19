@@ -15,7 +15,7 @@ public class ClimbCharacter : MonoBehaviour
 	[SerializeField] float m_RunCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
 	[SerializeField] float m_MoveSpeedMultiplier = 1f;
 	[SerializeField] float m_AnimSpeedMultiplier = 1f;
-	[SerializeField] float m_GroundCheckDistance = 0.1f;
+	[SerializeField] float m_GroundCheckDistance = 0.3f;
     [SerializeField] float climbDuration = 1.13f;
     [SerializeField] float moveInAirFactor = 0.05f;
 
@@ -225,8 +225,11 @@ public class ClimbCharacter : MonoBehaviour
 	}
 
     float lastJumpLeg = 1;
+    float lastWalkSound = 0;
+    float walkSoundInterval = 0.3f;
 
-	void UpdateAnimator(Vector3 move, Action action)
+
+    void UpdateAnimator(Vector3 move, Action action)
 	{
         // update the animator parameters
         m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
@@ -265,7 +268,11 @@ public class ClimbCharacter : MonoBehaviour
 		if (m_IsGrounded)
 			m_Animator.SetFloat("JumpLeg", jumpLeg);
 
-        if (m_IsGrounded && lastJumpLeg != jumpLeg && Mathf.Abs(m_TurnAmount) < 0.0001)  m_Sound.Play("Walk");
+        if (m_IsGrounded && lastJumpLeg != jumpLeg && lastWalkSound + walkSoundInterval < Time.time)
+        {
+            m_Sound.Play("Walk");
+            lastWalkSound = Time.time;
+        }
 
         lastJumpLeg = jumpLeg;
 
@@ -291,7 +298,7 @@ public class ClimbCharacter : MonoBehaviour
         Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
 		m_Rigidbody.AddForce(extraGravityForce);
         
-		m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+		m_GroundCheckDistance = m_Rigidbody.velocity.y <= 0 ? m_OrigGroundCheckDistance : 0.01f;
 	}
 
 
