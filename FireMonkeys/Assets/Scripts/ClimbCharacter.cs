@@ -40,14 +40,16 @@ public class ClimbCharacter : MonoBehaviour
     [HideInInspector] public Vector3 climbFinalPosition;
     private ClimbController climbController;
     private bool m_dashing = false;
-    private SoundManager m_Sound;
+    public SoundManager walkSounds;
+    public SoundManager actionSounds;
+    public SoundManager frisbeeSounds;
+    public SoundManager climbSounds;
 
     void Start()
 	{
 		m_Animator = GetComponent<Animator>();
 		m_Rigidbody = GetComponent<Rigidbody>();
 		m_Capsule = GetComponent<CapsuleCollider>();
-        m_Sound = GetComponent<SoundManager>();
         m_CapsuleHeight = m_Capsule.height;
 		m_CapsuleCenter = m_Capsule.center;
 
@@ -69,7 +71,7 @@ public class ClimbCharacter : MonoBehaviour
             climbFinalPosition = climbController.climbPos;
             pos.y = climbFinalPosition.y - 1.6f;
             transform.position = pos;
-            m_Sound.Play("Grab");
+            climbSounds.Play("Grab");
         }
         else
         {
@@ -270,7 +272,7 @@ public class ClimbCharacter : MonoBehaviour
 
         if (m_IsGrounded && lastJumpLeg != jumpLeg && lastWalkSound + walkSoundInterval < Time.time)
         {
-            m_Sound.Play("Walk");
+            walkSounds.Play("Walk");
             lastWalkSound = Time.time;
         }
 
@@ -310,7 +312,7 @@ public class ClimbCharacter : MonoBehaviour
 			// jump!
 			m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
             if (m_IsGrounded)
-                m_Sound.Play("Jump");
+                actionSounds.Play("Jump");
 			m_IsGrounded = false;
 			m_Animator.applyRootMotion = false;
 			m_GroundCheckDistance = 0.1f;
@@ -353,8 +355,11 @@ public class ClimbCharacter : MonoBehaviour
 		// it is also good to note that the transform position in the sample assets is at the base of the character
 		if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
 		{
+            if (walkSounds == null)
+                Debug.Log("Walk");
+
             if(!m_IsGrounded)
-                m_Sound.Play("Fall");
+                walkSounds.Play("Fall");
 
 			m_GroundNormal = hitInfo.normal;
 			m_IsGrounded = true;
@@ -363,7 +368,7 @@ public class ClimbCharacter : MonoBehaviour
 		else
 		{
             if (m_IsGrounded)
-                m_Sound.Play("Jump");
+                actionSounds.Play("Jump");
             m_IsGrounded = false;
 			m_GroundNormal = Vector3.up;
 			m_Animator.applyRootMotion = false;
@@ -384,28 +389,28 @@ public class ClimbCharacter : MonoBehaviour
 
         if (action == Action.throwFrisbee || action == Action.throwFrisbeeForward)
         {
-            if (m_Sound.isPlaying("Charge Frisbee"))
-                m_Sound.Stop();
+            if (frisbeeSounds.isPlaying("Charge Frisbee"))
+                frisbeeSounds.Stop();
 
-            m_Sound.Play("Frisbee");
+            frisbeeSounds.Play("Throw Frisbee");
         }
         else if (action == Action.dash && m_dashing)
         {
-
-            m_Sound.Play("Dash");
+            frisbeeSounds.Stop();
+            frisbeeSounds.Play("Dash");
             playedDash = true;
         }
         else if (action == Action.jumpWall || action == Action.die)
         {
-            m_Sound.Play("Jump");
+            actionSounds.Play("Jump");
         }
         else if (action == Action.chargeFrisbee)
         {
-            m_Sound.Play("Charge Frisbee");
+            frisbeeSounds.Play("Charge Frisbee");
         }
         else if (action == Action.climb)
         {
-            m_Sound.Play("Climb");
+            climbSounds.Play("Climb");
         }
 
         if (!m_dashing) playedDash = false;
