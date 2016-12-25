@@ -4,6 +4,7 @@ using System.Collections;
 public class ActivateCamera : MonoBehaviour {
 
     public new GameObject camera;
+    public Camera playerCamera;
 
     void OnTriggerEnter(Collider other)
     {
@@ -19,7 +20,7 @@ public class ActivateCamera : MonoBehaviour {
         if (other.tag == "Player")
         {
             camera.SetActive(false);
-            Camera.main.enabled = true;
+            playerCamera.enabled = true;
         }
     }
 

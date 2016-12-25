@@ -1,0 +1,746 @@
+fileFormatVersion: 2
+guid: 1a68a74e6b6077648a78243df55b9b28
+timeCreated: 1482608732
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: BodyM
+    100002: GuideN_1
+    100004: LArmJ
+    100006: LArmM
+    100008: LFingN
+    100010: LHandE
+    100012: LHandM
+    100014: LHandN
+    100016: LKneeM
+    100018: LLegG
+    100020: LLegM
+    100022: LShoulderJ
+    100024: LShoulderM
+    100026: LToeBM
+    100028: LToeCM
+    100030: LToeLM
+    100032: LToeRM
+    100034: NeckM
+    100036: null101
+    100038: null148
+    100040: null150
+    100042: null150_1
+    100044: null151_1
+    100046: null152
+    100048: null153
+    100050: null157
+    100052: null158
+    100054: null159
+    100056: obj48
+    100058: obj49
+    100060: polygon0
+    100062: polygon1
+    100064: polygon10
+    100066: polygon11
+    100068: polygon12
+    100070: polygon13
+    100072: polygon14
+    100074: polygon15
+    100076: polygon16
+    100078: polygon17
+    100080: polygon18
+    100082: polygon19
+    100084: polygon2
+    100086: polygon20
+    100088: polygon21
+    100090: polygon22
+    100092: polygon23
+    100094: polygon24
+    100096: polygon25
+    100098: polygon26
+    100100: polygon27
+    100102: polygon3
+    100104: polygon4
+    100106: polygon5
+    100108: polygon6
+    100110: polygon7
+    100112: polygon8
+    100114: polygon9
+    100116: RArmJ
+    100118: RArmM
+    100120: RFingN
+    100122: RFootJ
+    100124: RfootTop
+    100126: RHandE
+    100128: RHandM
+    100130: RHandN
+    100132: RKneeM
+    100134: RLegG
+    100136: RLegM
+    100138: RShoulderJ
+    100140: RShoulderM
+    100142: RToeB
+    100144: RToeC
+    100146: RToeE
+    100148: RToeL
+    100150: RToeR
+    100152: //RootNode
+    100154: StgDxZebesBirdman
+    400000: BodyM
+    400002: GuideN_1
+    400004: LArmJ
+    400006: LArmM
+    400008: LFingN
+    400010: LHandE
+    400012: LHandM
+    400014: LHandN
+    400016: LKneeM
+    400018: LLegG
+    400020: LLegM
+    400022: LShoulderJ
+    400024: LShoulderM
+    400026: LToeBM
+    400028: LToeCM
+    400030: LToeLM
+    400032: LToeRM
+    400034: NeckM
+    400036: null101
+    400038: null148
+    400040: null150
+    400042: null150_1
+    400044: null151_1
+    400046: null152
+    400048: null153
+    400050: null157
+    400052: null158
+    400054: null159
+    400056: obj48
+    400058: obj49
+    400060: polygon0
+    400062: polygon1
+    400064: polygon10
+    400066: polygon11
+    400068: polygon12
+    400070: polygon13
+    400072: polygon14
+    400074: polygon15
+    400076: polygon16
+    400078: polygon17
+    400080: polygon18
+    400082: polygon19
+    400084: polygon2
+    400086: polygon20
+    400088: polygon21
+    400090: polygon22
+    400092: polygon23
+    400094: polygon24
+    400096: polygon25
+    400098: polygon26
+    400100: polygon27
+    400102: polygon3
+    400104: polygon4
+    400106: polygon5
+    400108: polygon6
+    400110: polygon7
+    400112: polygon8
+    400114: polygon9
+    400116: RArmJ
+    400118: RArmM
+    400120: RFingN
+    400122: RFootJ
+    400124: RfootTop
+    400126: RHandE
+    400128: RHandM
+    400130: RHandN
+    400132: RKneeM
+    400134: RLegG
+    400136: RLegM
+    400138: RShoulderJ
+    400140: RShoulderM
+    400142: RToeB
+    400144: RToeC
+    400146: RToeE
+    400148: RToeL
+    400150: RToeR
+    400152: //RootNode
+    400154: StgDxZebesBirdman
+    4300000: polygon0
+    4300002: polygon1
+    4300004: polygon2
+    4300006: polygon3
+    4300008: polygon4
+    4300010: polygon5
+    4300012: polygon6
+    4300014: polygon7
+    4300016: polygon8
+    4300018: polygon9
+    4300020: polygon10
+    4300022: polygon11
+    4300024: polygon12
+    4300026: polygon13
+    4300028: polygon14
+    4300030: polygon15
+    4300032: polygon16
+    4300034: polygon17
+    4300036: polygon18
+    4300038: polygon19
+    4300040: polygon20
+    4300042: polygon21
+    4300044: polygon22
+    4300046: polygon23
+    4300048: polygon24
+    4300050: polygon25
+    4300052: polygon26
+    4300054: polygon27
+    9500000: //RootNode
+    13700000: polygon0
+    13700002: polygon1
+    13700004: polygon10
+    13700006: polygon11
+    13700008: polygon12
+    13700010: polygon13
+    13700012: polygon14
+    13700014: polygon15
+    13700016: polygon16
+    13700018: polygon17
+    13700020: polygon18
+    13700022: polygon19
+    13700024: polygon2
+    13700026: polygon20
+    13700028: polygon21
+    13700030: polygon22
+    13700032: polygon23
+    13700034: polygon24
+    13700036: polygon25
+    13700038: polygon26
+    13700040: polygon27
+    13700042: polygon3
+    13700044: polygon4
+    13700046: polygon5
+    13700048: polygon6
+    13700050: polygon7
+    13700052: polygon8
+    13700054: polygon9
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human:
+    - boneName: StgDxZebesBirdman
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RfootTop
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RShoulderJ
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RToeL
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RArmM
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LShoulderJ
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LArmJ
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LHandM
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LFingN
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: StgDxZebesBirdman(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon0
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon1
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon2
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon3
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon4
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon5
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon6
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon7
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon8
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon9
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon10
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon11
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon12
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon13
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon14
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon15
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon16
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon17
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon18
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon19
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon20
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon21
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon22
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon23
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon24
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon25
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon26
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: polygon27
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: StgDxZebesBirdman
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: GuideN_1
+      position: {x: 40.49231, y: 10.74146, z: -31.38821}
+      rotation: {x: -0.0037604386, y: -0.7070968, z: -0.0037604386, w: 0.7070968}
+      scale: {x: 0.93, y: 1, z: 1}
+      transformModified: 1
+    - name: null150
+      position: {x: 4.422051, y: -0.15371, z: 0.086112}
+      rotation: {x: 0.0010050739, y: -0, z: -0, w: 0.9999995}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: null152
+      position: {x: -3.101927, y: -0.72947, z: 7.609036}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: null151_1
+      position: {x: -4.415648, y: 0.312299, z: -0.056103}
+      rotation: {x: -0.07194638, y: 0, z: -0, w: 0.9974085}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: null153
+      position: {x: 2.904866, y: -1.7051, z: 7.38797}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: BodyM
+      position: {x: 42.26763, y: 4.983268, z: -31.68182}
+      rotation: {x: 0.078210294, y: -0.712304, z: 0.039494738, w: 0.6963809}
+      scale: {x: 1, y: 0.996, z: 1}
+      transformModified: 1
+    - name: LShoulderJ
+      position: {x: 40.55172, y: 11.05314, z: -35.49476}
+      rotation: {x: 0.8232568, y: -0.5533081, z: -0.110380106, w: 0.062567}
+      scale: {x: 0.997454, y: 0.998553, z: 0.999997}
+      transformModified: 1
+    - name: LArmJ
+      position: {x: -5.645999, y: 0, z: 0}
+      rotation: {x: -0.0068844557, y: 0.005444344, z: 0.41144603, w: 0.9113919}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LArmM
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LHandE
+      position: {x: -7.076149, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LHandN
+      position: {x: -6.402231, y: 0.026195, z: 0.00154}
+      rotation: {x: 0.875458, y: 0.44293946, z: -0.16299054, w: -0.1039814}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LFingN
+      position: {x: -0.000001, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0.081163704, w: 0.99670076}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LHandM
+      position: {x: -0, y: -0.000001, z: 0}
+      rotation: {x: 1.5230871e-16, y: 0.000000008726646, z: -0.000000017453292, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LShoulderM
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: NeckM
+      position: {x: 41.08612, y: 11.97361, z: -31.30795}
+      rotation: {x: 0.024015691, y: -0.71322274, z: -0.015817275, w: 0.7003474}
+      scale: {x: 0.5, y: 0.498048, z: 0.499952}
+      transformModified: 1
+    - name: null101
+      position: {x: 39.35029, y: 12.86542, z: -31.49249}
+      rotation: {x: 0.024015691, y: -0.71322274, z: -0.015817275, w: 0.7003474}
+      scale: {x: 0.5, y: 0.498043, z: 0.499957}
+      transformModified: 1
+    - name: null150_1
+      position: {x: -0, y: 0, z: -0.000001}
+      rotation: {x: -0.33871838, y: -0.02527476, z: 0.013572142, w: 0.9404504}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: obj48
+      position: {x: -0, y: 0.000003, z: 0.000001}
+      rotation: {x: 0.33512497, y: 0.02429035, z: 0.016255526, w: 0.94172025}
+      scale: {x: 1.000009, y: 0.997739, z: 1.002249}
+      transformModified: 1
+    - name: obj49
+      position: {x: -0.000002, y: 0.000002, z: -0.000005}
+      rotation: {x: -0.0055518863, y: 0.009097641, z: 0.028168313, w: 0.9995464}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RShoulderJ
+      position: {x: 40.40456, y: 10.58867, z: -27.2757}
+      rotation: {x: 0.7570048, y: 0.62830806, z: 0.1441221, w: 0.106778346}
+      scale: {x: 0.997339, y: 0.998694, z: 0.99997}
+      transformModified: 1
+    - name: RArmJ
+      position: {x: -5.645999, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0.7714153, w: 0.63633204}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RArmM
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RHandE
+      position: {x: -7.076149, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RHandN
+      position: {x: -6.402255, y: 0.023667, z: -0.004052}
+      rotation: {x: 0.8655867, y: 0.4597696, z: 0.12388112, w: 0.15500022}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RFingN
+      position: {x: -0, y: -0.000002, z: -0.000001}
+      rotation: {x: 0, y: -0, z: -0.061214797, w: 0.99812466}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RHandM
+      position: {x: -0, y: -0.000001, z: 0}
+      rotation: {x: 6.0923485e-16, y: 0.000000017453292, z: -0.000000034906584, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RShoulderM
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LToeBM
+      position: {x: 33.29345, y: 2.060721, z: -33.81513}
+      rotation: {x: 0.9952196, y: 0.027429791, z: 0.07917633, w: -0.050167084}
+      scale: {x: 0.999952, y: 0.996051, z: 0.999998}
+      transformModified: 1
+    - name: LToeCM
+      position: {x: 33.26166, y: 2.020882, z: -33.82442}
+      rotation: {x: 0.9952196, y: 0.027429791, z: 0.07917633, w: -0.050167084}
+      scale: {x: 0.999952, y: 0.996051, z: 0.999998}
+      transformModified: 1
+    - name: LToeLM
+      position: {x: 33.26166, y: 2.020882, z: -33.82442}
+      rotation: {x: 0.9952196, y: 0.027429791, z: 0.07917632, w: -0.050167084}
+      scale: {x: 0.999952, y: 0.996051, z: 0.999998}
+      transformModified: 1
+    - name: LToeRM
+      position: {x: 33.26166, y: 2.020882, z: -33.82442}
+      rotation: {x: 0.9952196, y: 0.0274298, z: 0.07917634, w: -0.050167084}
+      scale: {x: 0.999952, y: 0.996051, z: 0.999998}
+      transformModified: 1
+    - name: LKneeM
+      position: {x: 37.02109, y: 7.756299, z: -33.05819}
+      rotation: {x: 0.879678, y: 0.47474203, z: 0.018153474, w: -0.021381138}
+      scale: {x: 0.997844, y: 0.99816, z: 1}
+      transformModified: 1
+    - name: LLegM
+      position: {x: 42.62125, y: 3.120133, z: -33.24915}
+      rotation: {x: 0.94034106, y: -0.33907598, z: -0.0039507262, w: -0.027760765}
+      scale: {x: 0.997701, y: 0.998303, z: 1}
+      transformModified: 1
+    - name: RFootJ
+      position: {x: 33.18407, y: 1.867998, z: -30.29745}
+      rotation: {x: 0.99499375, y: 0.022007337, z: -0.090985574, w: 0.034997087}
+      scale: {x: 0.999925, y: 0.99611, z: 0.999965}
+      transformModified: 1
+    - name: RToeE
+      position: {x: -6.370669, y: 0, z: 0}
+      rotation: {x: 0.000000008726646, y: -1.5230871e-16, z: -0.000000017453292, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RfootTop
+      position: {x: -0.088531, y: -0.062173, z: -0.089234}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RToeB
+      position: {x: 0.030233, y: 0.018044, z: 0.000203}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RToeC
+      position: {x: -0.004428, y: 0.056675, z: 0.000261}
+      rotation: {x: 0.000000008726646, y: -0.000000017453292, z: 1.5230871e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RToeL
+      position: {x: -0.004428, y: 0.056675, z: 0.000261}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RToeR
+      position: {x: -0.004428, y: 0.056675, z: 0.000261}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: RKneeM
+      position: {x: 36.98531, y: 7.612338, z: -30.17785}
+      rotation: {x: 0.8828068, y: 0.46957046, z: 0.004847902, w: -0.011501857}
+      scale: {x: 0.997896, y: 0.998111, z: 0.999997}
+      transformModified: 1
+    - name: RLegM
+      position: {x: 42.56857, y: 2.953855, z: -30.30678}
+      rotation: {x: 0.940068, y: -0.34075856, z: -0.0053397175, w: -0.011281582}
+      scale: {x: 0.997687, y: 0.99832, z: 0.999997}
+      transformModified: 1
+    - name: null148
+      position: {x: 34.18436, y: 1.310644, z: -31.6853}
+      rotation: {x: -0, y: -0.7071068, z: 0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: LLegG
+      position: {x: -1.711808, y: 1.031944, z: 0.722261}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.449328, y: 0.449328, z: 0.449328}
+      transformModified: 1
+    - name: RLegG
+      position: {x: 1.381826, y: 0.923359, z: 0.82557}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.449328, y: 0.449328, z: 0.449328}
+      transformModified: 1
+    - name: null157
+      position: {x: 34.18436, y: 1.310644, z: -31.6853}
+      rotation: {x: -0.0037604386, y: -0.7070968, z: -0.0037604386, w: 0.7070968}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: null158
+      position: {x: -2.742867, y: 0.289661, z: 7.190025}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: null159
+      position: {x: 2.553653, y: 0.241038, z: 7.275846}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

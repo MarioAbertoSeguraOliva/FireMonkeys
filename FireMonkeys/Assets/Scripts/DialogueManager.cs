@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class DialogueManager : MonoBehaviour {
 
@@ -8,8 +9,15 @@ public class DialogueManager : MonoBehaviour {
     string[] fileLines;
     string displaySubtitle;
     string dialogueFile;
+
+    internal void BeginDialogue(object dialogueFile, AudioClip dialogueClip)
+    {
+        throw new NotImplementedException();
+    }
+
     float subtitleTime;
     int line = 0;
+    public float timePerLine = 0.2f;
 
     void Awake()
     {
@@ -54,7 +62,7 @@ public class DialogueManager : MonoBehaviour {
 
     void Update()
     {
-        if (fileLines != null && Time.time - subtitleTime > 3.5f && line < fileLines.Length)
+        if (fileLines != null  && line < fileLines.Length && Time.time - subtitleTime > timePerLine * (float)fileLines[Mathf.Max(0,line-1)].Length)
         {
             GetComponentInChildren<Text>().text = fileLines[line++];
             subtitleTime = Time.time;
