@@ -1,3 +1,3 @@
-﻿Old Man Whatsapp: Great! You have found the first note!
-Old Man Whatsapp: I need the other four notes.
-Old Man Whatsapp: The second is in the
+﻿<color=#85afab>Old Man Whatsapp:</color> Great! You have found the first note!
+<color=#85afab>Old Man Whatsapp:</color> I need the other four notes.
+<color=#85afab>Old Man Whatsapp:</color> The second is in the

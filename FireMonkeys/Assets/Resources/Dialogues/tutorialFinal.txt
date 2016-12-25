@@ -1,4 +1,4 @@
-Strange Man: You are late kiddo.
+<color=blue>Strange Man:</color> You are late kiddo.
 ... Chan chan chan ...
 
 The demo ends here
