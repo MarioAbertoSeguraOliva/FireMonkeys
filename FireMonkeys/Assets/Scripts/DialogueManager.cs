@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour {
     string[] fileLines;
     string displaySubtitle;
     string dialogueFile;
+    public bool withDialog = false;
 
     internal void BeginDialogue(object dialogueFile, AudioClip dialogueClip)
     {
@@ -62,13 +63,16 @@ public class DialogueManager : MonoBehaviour {
 
     void Update()
     {
-        if (fileLines != null  && line < fileLines.Length && Time.time - subtitleTime > timePerLine * (float)fileLines[Mathf.Max(0,line-1)].Length)
+        if (fileLines != null  && line < fileLines.Length && Time.time - subtitleTime > timePerLine * (float)fileLines[Mathf.Max(0,line-1)].Length *0.2f)
         {
             GetComponentInChildren<Text>().text = fileLines[line++];
             subtitleTime = Time.time;
-        }else if(fileLines == null || line > fileLines.Length)
+            withDialog = true;
+        }
+        else if((fileLines == null || line >= fileLines.Length) && withDialog)
         {
             GetComponentInChildren<Text>().text = "";
+            withDialog = false;
         }
     }
 }

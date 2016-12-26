@@ -9,7 +9,7 @@ public class Moon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        radius = GetComponent<SphereCollider>().radius * transform.localScale.y;
+        radius = GetComponent<SphereCollider>().radius * transform.localScale.y * 1.15f;
 	}
 	
 	// Update is called once per frame

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class DialogCollisionTrigger : MonoBehaviour {
@@ -8,6 +9,7 @@ public class DialogCollisionTrigger : MonoBehaviour {
     public bool onlyOnce = true;
     private bool displayed = false;
     public string otherTag = "Player";
+    public UnityEvent onEnd;
 
     void OnTriggerEnter(Collider other)
     {
@@ -15,7 +17,16 @@ public class DialogCollisionTrigger : MonoBehaviour {
         {
             DialogueManager.Instance.BeginDialogue(dialogueFile, dialogueClip);
             displayed = true;
+            if (onEnd != null)
+                StartCoroutine(WaitForEnd());
+                
         }
+    }
+
+    IEnumerator WaitForEnd()
+    {
+        yield return new WaitWhile(() => DialogueManager.Instance.withDialog == true);
+        onEnd.Invoke();
     }
 
     void OnCollisionEnter(Collision collision)
