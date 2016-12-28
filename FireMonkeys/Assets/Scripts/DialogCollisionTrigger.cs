@@ -25,6 +25,7 @@ public class DialogCollisionTrigger : MonoBehaviour {
 
     IEnumerator WaitForEnd()
     {
+        DialogueManager.Instance.withDialog = true;
         yield return new WaitWhile(() => DialogueManager.Instance.withDialog == true);
         onEnd.Invoke();
     }

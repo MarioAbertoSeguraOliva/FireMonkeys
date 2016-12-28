@@ -4,13 +4,14 @@ using System.Collections;
 public class KillWhenEnter : MonoBehaviour {
 
     public GameObject killerPrefab;
+    public float upOffset = 25f;
     private GameObject killEntity;
 
 	void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Vector3 position = transform.position + Vector3.up * 40;
+            Vector3 position = other.transform.position + Vector3.up * upOffset;
             killEntity = (GameObject)Instantiate(killerPrefab, position, killerPrefab.transform.rotation);
             killEntity.GetComponent<Moon>().objective = other.gameObject;
         }

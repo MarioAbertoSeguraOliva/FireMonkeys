@@ -42,6 +42,7 @@ public class DialogueManager : MonoBehaviour {
         this.dialogueFile = dialogueFile;
         playSubtitle();
         subtitleTime = Time.time - 2.5f;
+        withDialog = true;
     }
 
     void playAudio(AudioClip passedClip)
@@ -63,11 +64,10 @@ public class DialogueManager : MonoBehaviour {
 
     void Update()
     {
-        if (fileLines != null  && line < fileLines.Length && Time.time - subtitleTime > timePerLine * (float)fileLines[Mathf.Max(0,line-1)].Length *0.2f)
+        if (fileLines != null  && line < fileLines.Length && Time.time - subtitleTime > timePerLine * (float)fileLines[Mathf.Max(0,line-1)].Length)
         {
             GetComponentInChildren<Text>().text = fileLines[line++];
             subtitleTime = Time.time;
-            withDialog = true;
         }
         else if((fileLines == null || line >= fileLines.Length) && withDialog)
         {

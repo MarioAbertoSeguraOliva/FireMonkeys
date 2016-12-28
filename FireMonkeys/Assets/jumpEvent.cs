@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent (typeof(Animator))]
-public class jumpEvent : MonoBehaviour {
+public class JumpEvent : MonoBehaviour {
 
     public float destroyTimeout = 4f;
 

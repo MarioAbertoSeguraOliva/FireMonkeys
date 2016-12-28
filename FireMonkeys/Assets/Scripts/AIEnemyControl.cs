@@ -196,23 +196,19 @@ public class AIEnemyControl : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Frisbee"))
         {
-            GetComponent<Health>().Amount = 0;
-            fsm.ChangeState(state.Die);
+            GetComponent<Health>().Amount -= 1;
+            if (GetComponent<Health>().Amount == 0)
+                fsm.ChangeState(state.Die);
 
         }
 
-        
-
-    }
-
-    void OnCollisionStay(Collision collision)
-    {
         if (collision.gameObject.CompareTag("Player"))
         {
             if (collision.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Dash"))
             {
-                GetComponent<Health>().Amount = 0;
-                fsm.ChangeState(state.Die);
+                GetComponent<Health>().Amount -= 1;
+                if(GetComponent<Health>().Amount == 0)
+                    fsm.ChangeState(state.Die);
             }
 
         }
