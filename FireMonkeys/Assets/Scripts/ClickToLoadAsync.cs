@@ -10,16 +10,16 @@ public class ClickToLoadAsync : MonoBehaviour
     public GameObject loadingImage;
     private AsyncOperation async;
 
-    public void ClickAsync(int level)
+    public void ClickAsync(string level)
     {
         loadingImage.SetActive(true);
         StartCoroutine(LoadLevelWithBar(level));
     }
 
 
-    IEnumerator LoadLevelWithBar(int level)
+    IEnumerator LoadLevelWithBar(string sceneNameToLoad)
     {
-        async = SceneManager.LoadSceneAsync(level);
+        async = SceneManager.LoadSceneAsync(sceneNameToLoad);
         while (!async.isDone)
         {
             loadingBar.value = async.progress;

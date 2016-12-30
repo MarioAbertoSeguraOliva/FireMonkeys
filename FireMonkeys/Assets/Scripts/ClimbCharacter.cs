@@ -402,7 +402,7 @@ public class ClimbCharacter : MonoBehaviour
         }
         else if (action == Action.jumpWall || action == Action.die)
         {
-            actionSounds.Play("Jump");
+            actionSounds.Play("Die");
         }
         else if (action == Action.chargeFrisbee)
         {

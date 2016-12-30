@@ -182,6 +182,7 @@ public class AIEnemyControl : MonoBehaviour
         fsm.ChangeState(state.Chase);
     }
 
+    bool characterDash = false;
 
     //TODO: Improve damage system
 
@@ -196,19 +197,37 @@ public class AIEnemyControl : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Frisbee"))
         {
+            m_Sound.Play("Ouch");
+
             GetComponent<Health>().Amount -= 1;
             if (GetComponent<Health>().Amount == 0)
                 fsm.ChangeState(state.Die);
 
+
         }
 
         if (collision.gameObject.CompareTag("Player"))
+            characterDash = false;
+
+
+
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !characterDash)
         {
             if (collision.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Dash"))
             {
+                m_Sound.Play("Ouch");
+
+                characterDash = true;
+
                 GetComponent<Health>().Amount -= 1;
                 if(GetComponent<Health>().Amount == 0)
                     fsm.ChangeState(state.Die);
+
+
             }
 
         }

@@ -12,7 +12,7 @@ public class GetScroll : MonoBehaviour {
         if (other.CompareTag("Player"))
         {
             DialogueManager.Instance.BeginDialogue(dialogueFile, dialogueClip);
-            //Add note
+            other.GetComponent<GameOverManager>().respawnPosition = transform.position;
             if(nextScroll != null) nextScroll.SetActive(true);
             Destroy(this.gameObject);
         }

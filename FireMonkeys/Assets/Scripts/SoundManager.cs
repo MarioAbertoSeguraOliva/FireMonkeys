@@ -36,7 +36,7 @@ public class SoundManager : MonoBehaviour
         if (id == noSound) return;
 
         int playing = Playing();
-        if (playing == noSound || (playing == id && states[id].overlapWithHimself))
+        if (playing != id || (playing == id && states[id].overlapWithHimself))
             haveToPlay = id;
     }
 
