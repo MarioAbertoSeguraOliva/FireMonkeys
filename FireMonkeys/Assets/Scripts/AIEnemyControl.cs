@@ -150,7 +150,7 @@ public class AIEnemyControl : MonoBehaviour
                 break;
             }
 
-            character.Move(agent.desiredVelocity, ClimbCharacter.Action.punch);
+            character.Move(agent.desiredVelocity, ClimbCharacter.Action.move);
             agent.SetDestination(target.position);
             yield return 0;
         }
@@ -165,6 +165,7 @@ public class AIEnemyControl : MonoBehaviour
         {
             victimHealth.Amount -= damagePerPunch;
             m_Sound.Play("Punch");
+            character.Move(agent.desiredVelocity, ClimbCharacter.Action.punch);
             if (victimHealth.isDead())
             {
                 target = null;

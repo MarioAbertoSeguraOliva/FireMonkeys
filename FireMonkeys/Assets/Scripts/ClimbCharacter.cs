@@ -296,7 +296,7 @@ public class ClimbCharacter : MonoBehaviour
         // apply extra gravity from multiplier:
         
 
-        transform.localPosition += transform.rotation * (moveInAirFactor * move);
+        transform.localPosition += transform.localRotation * (moveInAirFactor * move);
         Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
 		m_Rigidbody.AddForce(extraGravityForce);
         

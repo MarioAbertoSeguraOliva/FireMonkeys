@@ -1,3 +1,12 @@
+Background sounds:
+Tutorial:  Delivering-the-Goods
+Stage1: Walk through
+Stage2: Adreline
+Stage3: Walk through
+Stage4: Closing In On the Loot
+Stage5: Delivering-the-Goods
+Main menu: Kevin MacLeod: Danger Storm
+
 Freesound.org sounds:
 Used ekokubza123's punch.wav
 Used cosmicembers's body-fall-4.wav
@@ -22,13 +31,18 @@ Used benboncan's swoosh-1.wav
 Used benboncan's swoosh-2.wav
 Used benboncan's swoosh-3.wav
 Used benboncan's swoosh-6.wav
+Used tommccann's Explosion_01.wav
 
 You Tube
 Used Gaming Sound FX's Sad Violin - MLG Sound Effects (HD)
 https://www.youtube.com/watch?v=7ODcC5z6Ca0
 
-Other
-Kevin MacLeod – Danger Storm
+
+Trailer
+Nicolai Heidlas Music: Take The Chance
+
+
+Freesound links:
 
 http://freesound.org/people/ekokubza123/sounds/104183
 http://freesound.org/people/cosmicembers/sounds/160738
@@ -53,3 +67,4 @@ http://freesound.org/people/benboncan/sounds/74688
 http://freesound.org/people/benboncan/sounds/74689
 http://freesound.org/people/benboncan/sounds/74690
 http://freesound.org/people/benboncan/sounds/74864
+http://freesound.org/people/tommccann/sounds/235968/

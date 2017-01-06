@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class KillWhenEnter : MonoBehaviour {
 
     public GameObject killerPrefab;
@@ -14,6 +15,7 @@ public class KillWhenEnter : MonoBehaviour {
             Vector3 position = other.transform.position + Vector3.up * upOffset;
             killEntity = (GameObject)Instantiate(killerPrefab, position, killerPrefab.transform.rotation);
             killEntity.GetComponent<Moon>().objective = other.gameObject;
+            killEntity.GetComponent<Moon>().explosionSound = GetComponent<AudioSource>();
         }
     }
 

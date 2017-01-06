@@ -6,6 +6,7 @@ public class Moon : MonoBehaviour {
     [HideInInspector]
     public GameObject objective;
     private float radius;
+    [HideInInspector] public AudioSource explosionSound;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,7 @@ public class Moon : MonoBehaviour {
             if(direction.magnitude < radius)
             {
                 objective.GetComponent<Health>().Amount = 0;
+                explosionSound.Play();
                 Destroy(gameObject, 2f);
             }
             transform.position += direction.normalized * Time.deltaTime * 14;
