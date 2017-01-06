@@ -170,6 +170,9 @@ public class ClimbCharacterUserControl : MonoBehaviour
         float v = CrossPlatformInputManager.GetAxis("Vertical");
         Vector3 move;
 
+        if (h > 0.1)
+            Debug.Log("");
+
         // calculate move direction to pass to character
         if (m_Cam != null)
         {

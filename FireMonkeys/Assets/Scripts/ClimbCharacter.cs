@@ -106,11 +106,13 @@ public class ClimbCharacter : MonoBehaviour
         }
 
         move = transform.InverseTransformDirection(move);
+        Debug.Log(move.z);
         CheckGroundStatus();
         CheckThrowStatus(action);
         move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-        m_TurnAmount = Mathf.Atan2(move.x, 1/*move.z*/);
-        m_ForwardAmount = move.z;
+        m_TurnAmount = Mathf.Atan2(move.x, 1);
+        //Remove the forward movement (Numbers are chosen for current values of turn speed and move speed)
+        m_ForwardAmount = (Mathf.Abs(m_TurnAmount) > 0.75 && Mathf.Abs(move.z) < 0.4)? 0 : move.z;
         
         if(!isClimbing && !grabTheLedge) {
 
@@ -234,6 +236,8 @@ public class ClimbCharacter : MonoBehaviour
     void UpdateAnimator(Vector3 move, Action action)
 	{
         // update the animator parameters
+        if (Mathf.Abs(m_ForwardAmount) > 0.1)
+            Debug.Log("Mec");
         m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
 		m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
 		m_Animator.SetBool("Crouch", m_Crouching);
@@ -355,9 +359,6 @@ public class ClimbCharacter : MonoBehaviour
 		// it is also good to note that the transform position in the sample assets is at the base of the character
 		if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
 		{
-            if (walkSounds == null)
-                Debug.Log("Walk");
-
             if(!m_IsGrounded)
                 walkSounds.Play("Fall");
 
@@ -382,8 +383,6 @@ public class ClimbCharacter : MonoBehaviour
         }
     }
 
-    bool playedDash = false;
-
     private void PlaySoundOf(Action action, Vector3 move)
     {
 
@@ -398,7 +397,6 @@ public class ClimbCharacter : MonoBehaviour
         {
             frisbeeSounds.Stop();
             frisbeeSounds.Play("Dash");
-            playedDash = true;
         }
         else if (action == Action.jumpWall || action == Action.die)
         {
@@ -412,8 +410,6 @@ public class ClimbCharacter : MonoBehaviour
         {
             climbSounds.Play("Climb");
         }
-
-        if (!m_dashing) playedDash = false;
     }
 
 }
