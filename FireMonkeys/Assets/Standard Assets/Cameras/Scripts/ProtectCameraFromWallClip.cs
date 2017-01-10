@@ -62,6 +62,7 @@ namespace UnityStandardAssets.Cameras
                 }
             }
 
+            
             // if there is a collision
             if (initialIntersect)
             {
@@ -96,6 +97,22 @@ namespace UnityStandardAssets.Cameras
                     hitSomething = true;
                 }
             }
+
+            #region check the colliders pls
+            RaycastHit hitInfo;
+            Vector3 target = m_Pivot.position + Vector3.up * 1.5f;
+            Vector3 direction = m_Cam.position - target;
+            if (Physics.Raycast(target, direction, out hitInfo, direction.magnitude, ~LayerMask.GetMask("Player")))
+            {
+                if (nearest > hitInfo.distance)
+                {
+                    hitSomething = true;
+                    nearest = hitInfo.distance;
+                    targetDist = -m_Pivot.InverseTransformPoint(hitInfo.point).z;
+                    Debug.DrawRay(target, direction, Color.yellow);
+                }
+            }
+            #endregion
 
             // visualise the cam clip effect in the editor
             if (hitSomething)

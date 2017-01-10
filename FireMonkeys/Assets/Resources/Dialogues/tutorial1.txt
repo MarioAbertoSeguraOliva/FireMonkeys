@@ -1,0 +1,4 @@
+<color=red>Mr Narrator</color>: Weelcomeee to Cordelia City!
+<color=red>Mr Narrator</color>: Today, you are going to learn the basics skills that will help you in your great adventure.
+<color=yellow>Instruction</color>: To move around use <color=yellow><aswd></color> keys.
+<color=red>Mr Narrator</color>: Try to move around you.

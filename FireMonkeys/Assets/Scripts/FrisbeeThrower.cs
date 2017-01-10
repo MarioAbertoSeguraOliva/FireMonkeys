@@ -8,25 +8,39 @@ public class FrisbeeThrower : MonoBehaviour {
     [SerializeField] private Transform hand;
     [HideInInspector] public float force = 15f;
     [SerializeField] private float frisbeeDelay = 0.3f;
-    [SerializeField] private float maxForce = 60f;
-    [SerializeField] private float minForce = 5f;
+    [SerializeField] private Vector2 forceRange = new Vector2( 5f, 60f );
+    [SerializeField] private Vector2 gravityRange = new Vector2( 0.0001f, 1f);
     [SerializeField] private float maxChargeTime = 4f;
     [SerializeField] private float objectiveDepth = 20;
     private float chargingFrisbeeStartTime;
+    [SerializeField] private bool m_HaveFrisbee = true;
+    public bool HaveFrisbee
+    {
+        get
+        {
+            return frisbee.activeInHierarchy;
+        }
+
+        set
+        {
+            frisbee.SetActive(value);
+        }
+    }
 
 
-    [SerializeField] public GameObject frisbee;
+    [HideInInspector] public GameObject frisbee;
     private bool isCharging;
     [HideInInspector]public Vector3 throwDirection;
+    private float gravity;
 
     // Use this for initialization
     void Start () {
         if (hand == null)
             hand = transform.FindChild("EthanRightHandThumb1").transform;
         frisbee = (GameObject)Instantiate(frisbeePrefab, hand.position, hand.rotation * frisbeePrefab.transform.rotation, hand);
-        
-    }
 
+        HaveFrisbee = m_HaveFrisbee;
+    }
 
 
     private IEnumerator ThrowFrisbee()
@@ -54,12 +68,20 @@ public class FrisbeeThrower : MonoBehaviour {
         {
             StartCoroutine(ThrowFrisbee());
             float chargingTime = Time.time - chargingFrisbeeStartTime;
-            force = Mathf.Lerp(minForce, maxForce, chargingTime / maxChargeTime);
+            force = Mathf.Lerp(forceRange[0], forceRange[1], chargingTime / maxChargeTime);
+            gravity = Mathf.Lerp(gravityRange[0], gravityRange[1], chargingTime / maxChargeTime);
         }
-        else if (action == ClimbCharacter.Action.chargeFrisbee)
+        else if (action == ClimbCharacter.Action.chargeFrisbee && !isCharging)
         {
             chargingFrisbeeStartTime = Time.time;
             charge();
+        }else if (action == ClimbCharacter.Action.throwFrisbeeForward && !isCharging)
+        {
+            throwDirection = transform.forward;
+            force = Mathf.Lerp(forceRange[0], forceRange[1], maxChargeTime / 4);
+            gravity = Mathf.Lerp(gravityRange[0], gravityRange[1], maxChargeTime / 4);
+            charge();
+            Invoke("throwFrisbee", frisbeeDelay * 2);
         }
 
     }
@@ -88,6 +110,7 @@ public class FrisbeeThrower : MonoBehaviour {
 
         frisbeeRb.isKinematic = false;
         frisbeeRb.velocity = throwDirection * force;
+        frisbeeRb.mass = gravity;
         frisbee.transform.parent = null;
 
         frisbee.GetComponent<Collider>().enabled = true;
@@ -97,6 +120,7 @@ public class FrisbeeThrower : MonoBehaviour {
         isCharging = false;
 
         frisbee.GetComponent<FrisbeeController>().Throw();
+        
     }
 
     public void charge()
@@ -114,5 +138,12 @@ public class FrisbeeThrower : MonoBehaviour {
             frisbee.transform.position = hand.position + hand.rotation * Vector3.forward *0.2f;
 
     }
+
+    public Vector3 HandPosition{
+        get{
+            return hand.position;
+        }
+    }
+
 
 }

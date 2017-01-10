@@ -31,7 +31,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		bool m_Crouching;
 
         bool insideEvent = false;
-        Collider collider;
+        new Collider collider;
         bool toDestroy = false;
 
 		void Start()

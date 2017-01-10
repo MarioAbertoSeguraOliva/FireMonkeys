@@ -1,0 +1,53 @@
+﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
+
+public class Health : MonoBehaviour
+{
+    public delegate void OnChangeHealth(float health);
+    public event OnChangeHealth onChangeHealthEvent;
+
+    public float initHealth = 100;
+    public float maxHealth = 100;
+
+    private float health;
+
+    void Start()
+    {
+        health = initHealth;
+    }
+
+    void xs(float a)
+    {
+
+    }
+    public float Amount {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            health = Mathf.Clamp(value, 0, maxHealth);
+            if(onChangeHealthEvent != null)
+                onChangeHealthEvent.Invoke(health);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+            Amount -= 5;
+    }
+
+    internal bool isDead()
+    {
+        return health <= 0;
+    }
+
+    internal void Revive()
+    {
+        Amount = initHealth;
+    }
+}
+

@@ -15,14 +15,14 @@ public class ClimbCharacter : MonoBehaviour
 	[SerializeField] float m_RunCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
 	[SerializeField] float m_MoveSpeedMultiplier = 1f;
 	[SerializeField] float m_AnimSpeedMultiplier = 1f;
-	[SerializeField] float m_GroundCheckDistance = 0.1f;
+	[SerializeField] float m_GroundCheckDistance = 0.3f;
     [SerializeField] float climbDuration = 1.13f;
+    [SerializeField] float moveInAirFactor = 0.05f;
 
-    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, comeOff };
+    public enum Action { move, jump, climb, crouch, chargeFrisbee, throwFrisbee, throwFrisbeeForward, comeOff, die, punch, jumpWall, dash };
 
 	Rigidbody m_Rigidbody;
 	Animator m_Animator;
-    float moveInAirFactor = 0.1f;
 	bool m_IsGrounded;
 	float m_OrigGroundCheckDistance;
 	const float k_Half = 0.5f;
@@ -39,14 +39,18 @@ public class ClimbCharacter : MonoBehaviour
     Vector3 climbInitPosition;
     [HideInInspector] public Vector3 climbFinalPosition;
     private ClimbController climbController;
-    private float m_distanceToFloor;
+    private bool m_dashing = false;
+    public SoundManager walkSounds;
+    public SoundManager actionSounds;
+    public SoundManager frisbeeSounds;
+    public SoundManager climbSounds;
 
     void Start()
 	{
 		m_Animator = GetComponent<Animator>();
 		m_Rigidbody = GetComponent<Rigidbody>();
 		m_Capsule = GetComponent<CapsuleCollider>();
-		m_CapsuleHeight = m_Capsule.height;
+        m_CapsuleHeight = m_Capsule.height;
 		m_CapsuleCenter = m_Capsule.center;
 
 		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
@@ -54,7 +58,8 @@ public class ClimbCharacter : MonoBehaviour
 
         climbController = GetComponentInChildren<ClimbController>();
         climbController.climbEvent += OnClimb;
-	}
+        climbController.climbSlopeEvent += OnAutoClimbSlope;
+    }
 
     void OnClimb(bool canClimb)
     {
@@ -66,9 +71,21 @@ public class ClimbCharacter : MonoBehaviour
             climbFinalPosition = climbController.climbPos;
             pos.y = climbFinalPosition.y - 1.6f;
             transform.position = pos;
-        }else
+            climbSounds.Play("Grab");
+        }
+        else
         {
+            m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.isKinematic = false;
+        }
+    }
+
+    void OnAutoClimbSlope(bool canClimb)
+    {
+        if (canClimb)
+        {
+            Vector3 newPos = climbController.climbPos;
+            transform.position = newPos;
         }
     }
 
@@ -92,12 +109,16 @@ public class ClimbCharacter : MonoBehaviour
         CheckGroundStatus();
         CheckThrowStatus(action);
         move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-        m_TurnAmount = Mathf.Atan2(move.x, move.z);
-        m_ForwardAmount = move.z;
+        m_TurnAmount = Mathf.Atan2(move.x, 1);
+        //Remove the forward movement (Numbers are chosen for current values of turn speed and move speed)
+        m_ForwardAmount = (Mathf.Abs(m_TurnAmount) > 0.75 && Mathf.Abs(move.z) < 0.4)? 0 : move.z;
         
         if(!isClimbing && !grabTheLedge) {
 
             ApplyExtraTurnRotation();
+
+            if (action == Action.jumpWall)
+                jumpAgainstWall();
 
             // control and velocity handling is different when grounded and airborne:
             if (m_IsGrounded)
@@ -117,6 +138,19 @@ public class ClimbCharacter : MonoBehaviour
 		// send input and other state parameters to the animator
 		UpdateAnimator(move, action);
 
+        PlaySoundOf(action, move);
+
+    }
+
+    private void jumpAgainstWall()
+    {
+        Vector3 jumpDir = climbController.normalJump.normalized;
+        jumpDir.y = 0.5f;
+        Debug.Log("JUMP "+ jumpDir.ToString());
+        //m_Rigidbody.velocity = jumpDir.normalized * m_JumpPower * 5;
+        m_Rigidbody.AddForce( jumpDir.normalized * m_JumpPower * 5, ForceMode.VelocityChange);
+
+        transform.forward = new Vector3(jumpDir.x, 0, jumpDir.z).normalized;
     }
 
     private void CheckThrowStatus(Action action)
@@ -133,6 +167,7 @@ public class ClimbCharacter : MonoBehaviour
         transform.position = climbFinalPosition;
         isClimbing = false;
         m_Rigidbody.isKinematic = false;
+        m_Rigidbody.velocity = Vector3.zero;
     }
 
     private void startClimbing()
@@ -156,7 +191,13 @@ public class ClimbCharacter : MonoBehaviour
 			m_Capsule.height = m_Capsule.height / 2f;
 			m_Capsule.center = m_Capsule.center / 2f;
 			m_Crouching = true;
-		}
+		}else if (!m_Crouching && (m_dashing || action == Action.dash))
+        {
+            if (m_dashing) return;
+            m_Capsule.height = m_Capsule.height / 2f;
+            m_Capsule.center = m_Capsule.center / 2f;
+            m_dashing = true;
+        }
 		else
 		{
 			Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
@@ -175,7 +216,7 @@ public class ClimbCharacter : MonoBehaviour
 	void PreventStandingInLowHeadroom()
 	{
 		// prevent standing up in crouch-only zones
-		if (!m_Crouching)
+		if (!m_Crouching && !m_dashing)
 		{
 			Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
 			float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
@@ -186,17 +227,34 @@ public class ClimbCharacter : MonoBehaviour
 		}
 	}
 
+    float lastJumpLeg = 1;
+    float lastWalkSound = 0;
+    float walkSoundInterval = 0.3f;
 
-	void UpdateAnimator(Vector3 move, Action action)
+
+    void UpdateAnimator(Vector3 move, Action action)
 	{
-		
         // update the animator parameters
-		m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
+        if (Mathf.Abs(m_ForwardAmount) > 0.1)
+            Debug.Log("Mec");
+        m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
 		m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
 		m_Animator.SetBool("Crouch", m_Crouching);
 		m_Animator.SetBool("OnGround", m_IsGrounded);
         m_Animator.SetBool("Climb", isClimbing);
         m_Animator.SetBool("GrabTheLedge", grabTheLedge);
+        m_Animator.SetBool("Punch", action == Action.punch);
+        m_Animator.SetBool("Dash", action == Action.dash && m_IsGrounded);
+
+        if (action == Action.die)
+            m_Animator.SetTrigger("Die");
+
+
+        if (action == Action.throwFrisbeeForward)
+        {
+            m_Animator.SetBool("Throw", true);
+        }
+        else
         m_Animator.SetBool("Throw", isChargingFrisbee);
 
 
@@ -215,6 +273,16 @@ public class ClimbCharacter : MonoBehaviour
 		if (m_IsGrounded)
 			m_Animator.SetFloat("JumpLeg", jumpLeg);
 
+        if (m_IsGrounded && lastJumpLeg != jumpLeg && lastWalkSound + walkSoundInterval < Time.time)
+        {
+            walkSounds.Play("Walk");
+            lastWalkSound = Time.time;
+        }
+
+        lastJumpLeg = jumpLeg;
+
+        if (m_dashing && !m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
+            m_dashing = false;
 
 		// the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
 		// which affects the movement speed because of the root motion.
@@ -231,11 +299,11 @@ public class ClimbCharacter : MonoBehaviour
         // apply extra gravity from multiplier:
         
 
-        transform.localPosition += transform.rotation * (moveInAirFactor * move);
+        transform.localPosition += transform.localRotation * (moveInAirFactor * move);
         Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
 		m_Rigidbody.AddForce(extraGravityForce);
         
-		m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+		m_GroundCheckDistance = m_Rigidbody.velocity.y <= 0 ? m_OrigGroundCheckDistance : 0.01f;
 	}
 
 
@@ -246,6 +314,8 @@ public class ClimbCharacter : MonoBehaviour
 		{
 			// jump!
 			m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
+            if (m_IsGrounded)
+                actionSounds.Play("Jump");
 			m_IsGrounded = false;
 			m_Animator.applyRootMotion = false;
 			m_GroundCheckDistance = 0.1f;
@@ -288,13 +358,18 @@ public class ClimbCharacter : MonoBehaviour
 		// it is also good to note that the transform position in the sample assets is at the base of the character
 		if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
 		{
+            if(!m_IsGrounded)
+                walkSounds.Play("Fall");
+
 			m_GroundNormal = hitInfo.normal;
 			m_IsGrounded = true;
 			m_Animator.applyRootMotion = true;
-		}
+        }
 		else
 		{
-			m_IsGrounded = false;
+            if (m_IsGrounded)
+                actionSounds.Play("Jump");
+            m_IsGrounded = false;
 			m_GroundNormal = Vector3.up;
 			m_Animator.applyRootMotion = false;
 		}
@@ -306,5 +381,35 @@ public class ClimbCharacter : MonoBehaviour
             grabTheLedge = false;
         }
     }
+
+    private void PlaySoundOf(Action action, Vector3 move)
+    {
+
+        if (action == Action.throwFrisbee || action == Action.throwFrisbeeForward)
+        {
+            if (frisbeeSounds.isPlaying("Charge Frisbee"))
+                frisbeeSounds.Stop();
+
+            frisbeeSounds.Play("Throw Frisbee");
+        }
+        else if (action == Action.dash && m_dashing)
+        {
+            frisbeeSounds.Stop();
+            frisbeeSounds.Play("Dash");
+        }
+        else if (action == Action.jumpWall || action == Action.die)
+        {
+            actionSounds.Play("Die");
+        }
+        else if (action == Action.chargeFrisbee)
+        {
+            frisbeeSounds.Play("Charge Frisbee");
+        }
+        else if (action == Action.climb)
+        {
+            climbSounds.Play("Climb");
+        }
+    }
+
 }
 

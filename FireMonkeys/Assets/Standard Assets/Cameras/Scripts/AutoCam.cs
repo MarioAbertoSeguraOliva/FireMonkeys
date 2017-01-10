@@ -18,6 +18,11 @@ namespace UnityStandardAssets.Cameras
         [SerializeField] private float m_TargetVelocityLowerLimit = 4f;// the minimum velocity above which the camera turns towards the object's velocity. Below this we use the object's forward direction.
         [SerializeField] private float m_SmoothTurnTime = 0.2f; // the smoothing for the camera's rotation
 
+        [SerializeField]
+        private float m_Turn = 7f; // the smoothing for the camera's rotation
+        [SerializeField]
+        private float m_MaxDistance = 3.5f; // the smoothing for the camera's rotation
+
         private float m_LastFlatAngle; // The relative angle of the target and the rig from the previous frame.
         private float m_CurrentTurnAmount; // How much to turn the camera
         private float m_TurnSpeedVelocityChange; // The change in the turn speed velocity
@@ -85,7 +90,10 @@ namespace UnityStandardAssets.Cameras
             }
 
             // camera position moves towards target position:
-            transform.position = Vector3.Lerp(transform.position, m_Target.position, deltaTime*m_MoveSpeed);
+            if ((transform.position - m_Target.position).magnitude < m_MaxDistance)
+                transform.position = Vector3.Lerp(transform.position, m_Target.position, deltaTime * m_MoveSpeed);
+            else
+                transform.position = Vector3.MoveTowards(m_Target.position, transform.position, m_MaxDistance);
 
             // camera's rotation is split into two parts, which can have independend speed settings:
             // rotating towards the target's forward direction (which encompasses its 'yaw' and 'pitch')
@@ -97,11 +105,13 @@ namespace UnityStandardAssets.Cameras
                     targetForward = transform.forward;
                 }
             }
-            var rollRotation = Quaternion.LookRotation(targetForward, m_RollUp);
+            var rollRotation = (targetForward == Vector3.zero)? Quaternion.identity :Quaternion.LookRotation(targetForward, m_RollUp);
 
             // and aligning with the target object's up direction (i.e. its 'roll')
             m_RollUp = m_RollSpeed > 0 ? Vector3.Slerp(m_RollUp, targetUp, m_RollSpeed*deltaTime) : Vector3.up;
-            transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, m_TurnSpeed*m_CurrentTurnAmount*deltaTime);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, m_TurnSpeed*m_CurrentTurnAmount*deltaTime);
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, Target.rotation, m_Turn * Time.deltaTime);
         }
     }
 }

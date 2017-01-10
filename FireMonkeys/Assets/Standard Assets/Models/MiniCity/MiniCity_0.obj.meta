@@ -118,6 +118,26 @@ ModelImporter:
     100220: lwpg0100SG
     100222: lwpg0101SG
     100224: //RootNode
+    100226: default
+    100228: default_MeshPart0
+    100230: default_MeshPart1
+    100232: default_MeshPart10
+    100234: default_MeshPart11
+    100236: default_MeshPart12
+    100238: default_MeshPart13
+    100240: default_MeshPart14
+    100242: default_MeshPart15
+    100244: default_MeshPart16
+    100246: default_MeshPart17
+    100248: default_MeshPart18
+    100250: default_MeshPart2
+    100252: default_MeshPart3
+    100254: default_MeshPart4
+    100256: default_MeshPart5
+    100258: default_MeshPart6
+    100260: default_MeshPart7
+    100262: default_MeshPart8
+    100264: default_MeshPart9
     400000: Bark
     400002: Bark_1
     400004: Bark_2
@@ -231,6 +251,26 @@ ModelImporter:
     400220: lwpg0100SG
     400222: lwpg0101SG
     400224: //RootNode
+    400226: default
+    400228: default_MeshPart0
+    400230: default_MeshPart1
+    400232: default_MeshPart10
+    400234: default_MeshPart11
+    400236: default_MeshPart12
+    400238: default_MeshPart13
+    400240: default_MeshPart14
+    400242: default_MeshPart15
+    400244: default_MeshPart16
+    400246: default_MeshPart17
+    400248: default_MeshPart18
+    400250: default_MeshPart2
+    400252: default_MeshPart3
+    400254: default_MeshPart4
+    400256: default_MeshPart5
+    400258: default_MeshPart6
+    400260: default_MeshPart7
+    400262: default_MeshPart8
+    400264: default_MeshPart9
     2300000: Bark_1
     2300002: Bark_2_MeshPart0
     2300004: Bark_2_MeshPart1
@@ -338,6 +378,25 @@ ModelImporter:
     2300208: lwpg0063SG
     2300210: lwpg0100SG
     2300212: lwpg0101SG
+    2300214: default_MeshPart0
+    2300216: default_MeshPart1
+    2300218: default_MeshPart10
+    2300220: default_MeshPart11
+    2300222: default_MeshPart12
+    2300224: default_MeshPart13
+    2300226: default_MeshPart14
+    2300228: default_MeshPart15
+    2300230: default_MeshPart16
+    2300232: default_MeshPart17
+    2300234: default_MeshPart18
+    2300236: default_MeshPart2
+    2300238: default_MeshPart3
+    2300240: default_MeshPart4
+    2300242: default_MeshPart5
+    2300244: default_MeshPart6
+    2300246: default_MeshPart7
+    2300248: default_MeshPart8
+    2300250: default_MeshPart9
     3300000: Bark_1
     3300002: Bark_2_MeshPart0
     3300004: Bark_2_MeshPart1
@@ -445,6 +504,25 @@ ModelImporter:
     3300208: lwpg0063SG
     3300210: lwpg0100SG
     3300212: lwpg0101SG
+    3300214: default_MeshPart0
+    3300216: default_MeshPart1
+    3300218: default_MeshPart10
+    3300220: default_MeshPart11
+    3300222: default_MeshPart12
+    3300224: default_MeshPart13
+    3300226: default_MeshPart14
+    3300228: default_MeshPart15
+    3300230: default_MeshPart16
+    3300232: default_MeshPart17
+    3300234: default_MeshPart18
+    3300236: default_MeshPart2
+    3300238: default_MeshPart3
+    3300240: default_MeshPart4
+    3300242: default_MeshPart5
+    3300244: default_MeshPart6
+    3300246: default_MeshPart7
+    3300248: default_MeshPart8
+    3300250: default_MeshPart9
     4300000: Bark_MeshPart0
     4300002: Bark_MeshPart1
     4300004: Bark_1
@@ -552,6 +630,25 @@ ModelImporter:
     4300208: lwpg0063SG
     4300210: lwpg0100SG
     4300212: lwpg0101SG
+    4300214: default_MeshPart0
+    4300216: default_MeshPart1
+    4300218: default_MeshPart2
+    4300220: default_MeshPart3
+    4300222: default_MeshPart4
+    4300224: default_MeshPart5
+    4300226: default_MeshPart6
+    4300228: default_MeshPart7
+    4300230: default_MeshPart8
+    4300232: default_MeshPart9
+    4300234: default_MeshPart10
+    4300236: default_MeshPart11
+    4300238: default_MeshPart12
+    4300240: default_MeshPart13
+    4300242: default_MeshPart14
+    4300244: default_MeshPart15
+    4300246: default_MeshPart16
+    4300248: default_MeshPart17
+    4300250: default_MeshPart18
     6400000: Bark_1
     6400002: Bark_2_MeshPart0
     6400004: Bark_2_MeshPart1
@@ -659,6 +756,25 @@ ModelImporter:
     6400208: lwpg0063SG
     6400210: lwpg0100SG
     6400212: lwpg0101SG
+    6400214: default_MeshPart0
+    6400216: default_MeshPart1
+    6400218: default_MeshPart10
+    6400220: default_MeshPart11
+    6400222: default_MeshPart12
+    6400224: default_MeshPart13
+    6400226: default_MeshPart14
+    6400228: default_MeshPart15
+    6400230: default_MeshPart16
+    6400232: default_MeshPart17
+    6400234: default_MeshPart18
+    6400236: default_MeshPart2
+    6400238: default_MeshPart3
+    6400240: default_MeshPart4
+    6400242: default_MeshPart5
+    6400244: default_MeshPart6
+    6400246: default_MeshPart7
+    6400248: default_MeshPart8
+    6400250: default_MeshPart9
   materials:
     importMaterials: 1
     materialName: 0

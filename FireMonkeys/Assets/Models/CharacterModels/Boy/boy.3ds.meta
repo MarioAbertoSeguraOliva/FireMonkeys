@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 19478a10206aa6e4fbc9a54e743f4601
-timeCreated: 1479296787
+timeCreated: 1480097487
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -12,6 +12,7 @@ ModelImporter:
     2300000: boy_pivot
     3300000: boy_pivot
     4300000: boy_pivot
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -22,11 +23,16 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    animationImportErrors: 
+    animationImportErrors: '
+
+      Imported file ''boy'' conversion failed: Required human bone ''Hips'' not found
+
+
+'
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -59,7 +65,17 @@ ModelImporter:
   copyAvatar: 0
   humanDescription:
     human: []
-    skeleton: []
+    skeleton:
+    - name: boy(Clone)
+      position: {x: 0.0115863085, y: 3.6349232, z: -0.06855901}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 4.1440234, y: 4.1440234, z: 4.1440234}
+      transformModified: 1
+    - name: boy_pivot
+      position: {x: 0.007136911, y: -0.016057849, z: -0.024386346}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -70,7 +86,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

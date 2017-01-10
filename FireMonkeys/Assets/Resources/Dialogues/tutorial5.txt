@@ -1,0 +1,5 @@
+<color=red>Mr Narrator:</color> It's that a frisbee? I'm not sure if that can be used as a weapon but try it out.
+<color=yellow>Instruction:</color> Use <color=yellow><RightClick></color> to throw forward the frisbee 
+<color=yellow>Instruction:</color> Use <color=yellow><LeftClick></color> to throw the frisbee in the desired direction as a ranged attack.
+<color=yellow>Instruction:</color> If you hold <color=yellow><LeftClick></color>, you'll perform a charged ranged attack.
+<color=red>Mr Narrator:</color> Try to use the skills to get out of this courtyard.

@@ -1,0 +1,5 @@
+<color=red>Mr Narrator:</color> WAIT! STOP!
+<color=red>Mr Narrator:</color> That guy in the backyard is an ENEMY
+<color=red>Mr Narrator:</color> Attack him with the frisbee
+<color=red>Mr Narrator:</color> Or do a dash with Q
+<color=yellow>Instructions:</color> Use <color=yellow><Q></color> to do a SLIDE/DASH to attack enemys

@@ -5,16 +5,18 @@ using UnityStandardAssets.CrossPlatformInput;
 
 
 [RequireComponent(typeof (ClimbCharacter))]
-[RequireComponent(typeof (ClimbController))]
 public class ClimbCharacterUserControl : MonoBehaviour
 {
     private ClimbCharacter m_Character;       // A reference to the ThirdPersonCharacter on the object
     private ClimbController climbController;   // A reference to the ClimbController on the object
     private Transform m_Cam;                  // A reference to the main camera in the scenes transform
     private Vector3 m_CamForward;             // The current forward direction of the camera
-    private bool m_Jump;                      
+    private bool m_Jump;
+    private float m_JumpWallTimestamp;
+    private const float jumpWallTimeOut = 0.25f;
     private bool m_Climb;
     private bool isChargingFrisbee = false;
+    private bool isDead = false;
     private FrisbeeThrower frisbeeThrower;
 
     private void Start()
@@ -35,12 +37,36 @@ public class ClimbCharacterUserControl : MonoBehaviour
         m_Character = GetComponent<ClimbCharacter>();
         climbController = GetComponentInChildren<ClimbController>();
         climbController.climbEvent += ClimbEvent;
+        //climbController.jumpEvent += JumpEvent; //Uncomment to hablity jump against wall or double jump
         frisbeeThrower = GetComponentInChildren<FrisbeeThrower>();
+        GetComponent<Health>().onChangeHealthEvent += ChangeHealth;
+    }
+
+    internal void Respawn()
+    {
+        GetComponent<Health>().Revive();
+        GetComponent<Animator>().Rebind();
+        isDead = false;
     }
 
     private void ClimbEvent(bool canClimb)
     {
         m_Climb = canClimb;
+    }
+
+    private void JumpEvent() {
+        m_JumpWallTimestamp = Time.time;
+    }
+
+    private void ChangeHealth(float newHealth)
+    {
+        if(newHealth == 0 && !isDead)
+        {
+            isDead = true;
+            GetComponent<GameOverManager>().OnGameOver();
+            m_Character.Move(Vector3.zero, ClimbCharacter.Action.die);
+        }
+
     }
 
     private void Update()
@@ -53,7 +79,8 @@ public class ClimbCharacterUserControl : MonoBehaviour
     // Fixed update is called in sync with physics
     private void FixedUpdate()
     {
-
+        if (isDead) return;
+        
         Vector3 m_Move = calculateMove();
 
         ClimbCharacter.Action action = getAction();
@@ -71,32 +98,52 @@ public class ClimbCharacterUserControl : MonoBehaviour
         m_Jump = false;
     }
 
+    private bool canJumpWall()
+    {
+        return Time.time - m_JumpWallTimestamp < m_JumpWallTimestamp;
+    }
+
     private ClimbCharacter.Action getAction()
     {
         bool crouch = Input.GetKey(KeyCode.C);
-        bool climb = Input.GetKeyDown(KeyCode.E) && m_Climb;
+        bool slide = Input.GetKey(KeyCode.Q);
+        bool climb = (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && m_Climb;
+        bool comeOff = Input.GetKeyDown(KeyCode.E) && m_Climb;
+        bool jumpWall = Input.GetKeyDown(KeyCode.Space) && canJumpWall();
+        //bool climb = CrossPlatformInputManager.GetAxis("Vertical") > 0 && m_Climb;
+
         bool chargeFrisbee = Input.GetMouseButtonDown(0);
         bool throwFrisbee = Input.GetMouseButtonUp(0);
-
-        if (isChargingFrisbee && Input.GetMouseButtonUp(1))
-            frisbeeThrower.addNewObjective(Camera.main.ScreenPointToRay(Input.mousePosition));
+        bool shotFrisbee = Input.GetMouseButtonDown(1);
 
         if (climb)
         {
             m_Character.climbFinalPosition = climbController.climbPos;
             return ClimbCharacter.Action.climb;
         }
+        else if (jumpWall)
+        {
+            m_JumpWallTimestamp = 0;
+            return ClimbCharacter.Action.jumpWall;
+        }
         else if (m_Jump)
-             return (m_Climb)? ClimbCharacter.Action.comeOff : ClimbCharacter.Action.jump;
-        else if (chargeFrisbee)
+            return ClimbCharacter.Action.jump;
+        else if (comeOff)
+            return ClimbCharacter.Action.comeOff;
+        else if (slide)
+            return ClimbCharacter.Action.dash;
+        else if (!isChargingFrisbee && shotFrisbee)
+        {
+            return ClimbCharacter.Action.throwFrisbeeForward;
+        }
+        else if (chargeFrisbee && frisbeeThrower.HaveFrisbee)
         {
             isChargingFrisbee = true;
             return ClimbCharacter.Action.chargeFrisbee;
         }
-        else if (throwFrisbee)
+        else if (throwFrisbee && frisbeeThrower.HaveFrisbee)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            frisbeeThrower.throwDirection = ray.direction;
+            frisbeeThrower.throwDirection = getThrowDirection();
             return ClimbCharacter.Action.throwFrisbee;
         }
         else if (crouch)
@@ -106,12 +153,25 @@ public class ClimbCharacterUserControl : MonoBehaviour
 
     }
 
+    private Vector3 getThrowDirection()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, float.PositiveInfinity, ~LayerMask.GetMask("Player")))
+            return (hitInfo.point - frisbeeThrower.HandPosition).normalized;
+        else
+            return ray.direction;
+    }
+
     private Vector3 calculateMove()
     {
         // read inputs
         float h = CrossPlatformInputManager.GetAxis("Horizontal");
         float v = CrossPlatformInputManager.GetAxis("Vertical");
         Vector3 move;
+
+        if (h > 0.1)
+            Debug.Log("");
 
         // calculate move direction to pass to character
         if (m_Cam != null)
@@ -125,6 +185,8 @@ public class ClimbCharacterUserControl : MonoBehaviour
             // we use world-relative directions in the case of no main camera
             move = v * Vector3.forward + h * Vector3.right;
         }
+
+        if (Input.GetKey(KeyCode.LeftShift)) move *= 0.3f;
 
         return move;
     }
