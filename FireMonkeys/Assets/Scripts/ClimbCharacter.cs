@@ -106,7 +106,6 @@ public class ClimbCharacter : MonoBehaviour
         }
 
         move = transform.InverseTransformDirection(move);
-        Debug.Log(move.z);
         CheckGroundStatus();
         CheckThrowStatus(action);
         move = Vector3.ProjectOnPlane(move, m_GroundNormal);
